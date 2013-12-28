@@ -1,0 +1,833 @@
+%\chapter{Introduction}
+
+
+
+\chapter{Static analysis and Goblint}
+\section{Program analysis}
+The goal of program analysis is to gain knowledge about certain properties of a program, which is useful for testing, verification and program optimization.
+This can be done in two ways: by observing its execution which is referred to as dynamic analysis or by analyzing its code which is called static analysis.
+
+\begin{description}
+ \item[dynamic analysis]
+Testing is normally done with a range of different inputs. The inputs are chosen so that as much of the code as possible is executed. This is measured by the so called \textit{code coverage}. Testing every possible combination might take very long, so that choosing the input classes is essential for the effectiveness of the test and might require some experience. Input variables that can't be chosen like the order in which threads are run by the operating system, make it difficult to test for race conditions. Also the testing itself could influence these properties in a way that problems only occur when not testing.
+
+The concept is to find errors by varying the inputs. This way errors can remain undiscovered and absence of errors can't be proven.
+The advantage is that it only finds true errors and that the run-time of the analysis isn't much different than the time it takes to execute the program on its own.
+
+\item[static analysis]
+The source code of the program or something derived from it is analyzed without being executed.
+The simplest form is to look for certain patterns in the code, which is not very flexible and mostly used to check style or coding conventions.
+
+A more powerful approach is abstract interpretation (originally proposed by Cousot and Cousot \cite{Cousot:1977:AIU:512950.512973}), which tries to derive semantics from the code.
+The problem is that there is no general and effective method to do so. The analysis could possibly not terminate, which is why sometimes the semantics have to be approximated in order to avoid non-termination. In general the analysis can be accelerated with the cost of getting less precise.
+
+For a sound analysis this means that it would find more errors than there actually are in the program. The advantage is that it will find all real errors. So if it does not find any errors, the program is guaranteed to be error-free.
+
+A disadvantage is that the analysis could need much more time and memory than the execution of the program, or that for a certain size, the analysis cannot be done within acceptable boundaries.
+\end{description}
+
+
+\section{Complete lattices}
+\begin{definition}A partial order is a set $\mathbb{D}$ and a binary relation $\sqsubseteq \subseteq \mathbb{D} \times \mathbb{D}$ which is reflexive, anti-symmetric and transitive.
+\end{definition}
+\begin{definition}
+An element $d \in \mathbb{D}$ is called upper bound for $X \subseteq \mathbb{D}$ if $x \sqsupseteq d$ for all $x \in X$.
+
+It is called least upper bound if it is an upper bound and $d \sqsupseteq y$ for every upper bound $y$ of $X$.
+\end{definition}
+\begin{definition}
+A complete lattice $\mathbb{D}$ is a partial ordering where every subset $X \subseteq \mathbb{D}$ has a least upper bound $\bigsqcup X \in \mathbb{D}$.
+\end{definition}
+The counterpart to the \textit{least upper bound} is the \textit{greatest lower bound}. They are also called \textit{join} and \textit{meet}, respectively written as $\bigsqcup X$ and $\bigsqcap X$ for a set $X$.
+
+A lattice is called \textit{bounded} if it has a greatest and a least element, which are referred to as \textit{top} ($\top$) and \textit{bottom} ($\bot$).
+
+Every complete lattice has
+\begin{itemize}
+\item a least element $\bot = \bigsqcup \emptyset \in \mathbb{D}$
+\item a greatest element $\top = \bigsqcup \mathbb{D} \in \mathbb{D}$.
+\end{itemize}
+
+For example, $\mathbb{D} = \mathbb{Z}$ with the relation "=" is not a complete lattice since it has no least upper bound or greatest lower bound. However, the lattice $\mathbb{d} = \mathbb{Z} \cup \{\bot, \top\}$ with "=" (shown in \refFigure{lattice-flat}) is complete. A lattice of this form is called \textit{flat}.
+
+\graphic[width=.6\linewidth]{lattice-flat}{Flat lattice \cite{seidl2009uebersetzerbau}}
+
+
+\section{Operational semantics and abstract interpretation}
+C programs consist of a finite set of procedures $Proc$, including the main procedure ($main \in Proc$), which is executed first.
+
+% intraprocedural
+A control flow graph $G_p$ for a procedure $p \in Proc$ is a tuple $(N_p,E_p,e_p,r_p)$:
+\begin{itemize}
+\item $N_p$ is the finite set of nodes, which represent program points
+\item $E_p$ is the finite set of edges, which represent steps of computation
+\item $e_p \in N_p$ is the start node, which represents the entry point
+\item $r_p \in N_p$ is the end node, which represents the return point
+\end{itemize}
+An edge from node $u$ to $v$ with a label $lab$ is defined as $(u, lab, v)$.
+For tests, the edge label $Pos(e)$ is used for the branch where the expression $e$ evaluates to \verb|true| and $Neg(e)$ for the branch where it evaluates to \verb|false|. This notion is also used for representing loops as shown in \refFigure{cfg_branch}.
+
+\begin{figure}[ht]
+\begin{minipage}[t]{0.5\textwidth}
+\hfill
+\begin{lstlisting}[language=C]
+if(x){
+	a();
+}else{
+	b();
+}
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+\centering
+\begin{tikzpicture}[style=cfg]
+  \node (1) {1};
+  \node [below left of=1] (2) {4};
+  \node [below right of=1] (3) {2};
+  \node [below right of=2] (4) {5};
+
+  \path[style=cfgpath]
+    (1) edge node [left, pos=.3] {Neg(x)} (2)
+        edge node [right, pos=.3] {Pos(x)} (3)
+    (2) edge node [left, pos=.6] {b()} (4)
+    (3) edge node [right, pos=.6] {a()} (4);
+\end{tikzpicture}
+\end{minipage}
+\\
+
+\begin{minipage}[t]{0.5\textwidth}
+\hfill
+\begin{lstlisting}[language=C]
+while(x){
+	a();
+}
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+\centering
+\begin{tikzpicture}[style=cfg]
+  \node (1) {1};
+  \node [below left of=1] (3) {3};
+  \node [below right of=1] (2) {2};
+
+  \path[style=cfgpath]
+    (1) edge node [left, pos=.3] {Neg(x)} (3)
+        edge node [right, pos=.3] {Pos(x)} (2)
+    (2) edge [bend left] node {a()} (1);
+\end{tikzpicture}
+\end{minipage}
+\\
+
+\begin{minipage}[t]{0.5\textwidth}
+\hfill
+\begin{lstlisting}[language=C]
+for(int i=0; i<42; i++){
+	a();
+}
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+\centering
+\begin{tikzpicture}[style=cfg]
+  \node (1) {1};
+  \node [below of=1] (1a) {1'};
+  \node [below left of=1a] (3) {3};
+  \node [below right of=1a] (2) {2};
+  \node [below of=2] (1b) {1''};
+
+  \path[style=cfgpath]
+    (1) edge [right] node {int i=0} (1a)
+    (1a) edge node [left, pos=.3] {Neg(i<42)} (3)
+         edge node [right, pos=.3] {Pos(i<42)} (2)
+    (2) edge [right] node {a()} (1b)
+    (1b) edge [bend left] node {i++} (1a);
+\end{tikzpicture}
+\end{minipage}
+
+  \caption{Control-flow graphs with branching}
+  \label{fig:cfg_branch}
+\end{figure}
+
+A path $\pi$ is a sequence of edges.
+Computations follow paths in the graph and transform the current state $s \in S$.
+Every edge $k = (u, lab, v)$ defines a partial transformation
+\begin{align}
+\llbracket k \rrbracket = \llbracket lab \rrbracket : S \to S
+\end{align}
+of the state. This is called the concrete effect of the edge.
+
+The result of the computation of a path $\pi = k_1 \pi_1$ on a state $s$ is defined as
+\begin{align}
+\llbracket \pi \rrbracket \; s = \llbracket \pi_1 \rrbracket \; (\llbracket k_1 \rrbracket \; s)
+\end{align}
+and the result for the empty path $\pi = \epsilon$ as
+\begin{align}
+\llbracket \pi \rrbracket \; s = s.
+\end{align}
+
+% concrete semantics and MOP
+The concrete semantics then specify the type of state and the transfer functions for edges.
+%TODO example for constant propagation?
+Since we are interested in the state at a given program point and there might be multiple paths leading to that point, we have to merge all the paths, which results in a powerset of possible states. This means that we are looking for a mapping
+\begin{align}
+\sigma : N \to 2^S.
+\end{align}
+This is called the Merge Over all Paths (MOP) solution, which contains all the possible states for any execution.
+Analyses like constant propagation can be used to improve the precision by excluding paths.
+
+Circles in the control flow graph might lead to infinitely many paths, which is why the MOP solution can not be computed in general.
+
+% abstract semantics and MOP
+To solve this problem, abstract interpretation relies on abstract semantics, consisting of a domain $\mathbb{D}$, which has to be a complete lattice, and abstract transfer functions, which have to be monotonic.
+
+There is a Galois connection between the concrete states $2^S$ and the abstract state $\mathbb{D}$ which approximates the former.
+A concretization function $\gamma : \mathbb{D} \to 2^S$ is used to map an abstract state to all simulated concrete states.
+
+The abstract effect of an edge $k$ is
+\begin{align}
+\llbracket k \rrbracket^\sharp = \llbracket lab \rrbracket^\sharp : \mathbb{D} \to \mathbb{D}.
+\end{align}
+Paths are defined analog to concrete paths.
+
+The MOP solution with abstract effects for a point $v$, start point $start$ and start state $d_0 \in \mathbb{D}$ is defined as
+\begin{align}
+\mathcal{I}^*[v] = \bigsqcup \{\llbracket \pi \rrbracket^\sharp \; d_0 \; | \; start \to^* v\}.
+\end{align}
+
+% constraint system
+Instead of this join over an possibly infinite set, a constraint system is used to guarantee computability at the cost of precision. Since the abstract state is a complete lattice and the transformations are monotonic, the system will always converge to a least fix-point solution (Knaster-Tarski theorem) that approximates the MOP solution (Kam, Ullman).
+
+The constraint system for a start point $start$ and start state $d_0 \in \mathbb{D}$ is set up as
+\begin{align}
+\mathcal{I}[start] &\sqsupseteq d_0\\
+\mathcal{I}[v]	   &\sqsupseteq \llbracket k \rrbracket^\sharp \; (\mathcal{I}[u])	&\forall k = (u, \_, v) \in E
+\end{align}
+and can be solved using various iteration schemes.
+%TODO example for constraint system?
+A solution of the constraint system then approximates the MOP solution:
+\begin{align}
+\mathcal{I}[v]	   &\sqsupseteq \mathcal{I}^*[v] &\forall v \in N
+\end{align}
+
+% interprocedural
+While these concepts work fine intraprocedurally, programs with multiple procedures need some special attention.
+For simplification we assume that variables are uniquely named and parameters and return values are handled as assignments.
+A procedure $p$ has exactly one definition \verb|void p(){...}| and can be called via \verb|p()|.
+We introduce call edges from a call site to the start of the procedure definition and return edges from the return point to the point after the call site.
+\refFigure{ivp} shows such a combined graph of multiple procedures.
+
+\begin{figure}[ht]
+\begin{minipage}[t]{0.5\textwidth}
+\hfill
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+
+int x;
+
+void f(){
+    x++;
+}
+
+void g(){
+    f();
+}
+
+void main(){
+    x = 0;
+    f();
+    g();
+    printf("%i", x);
+}
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+\centering
+\begin{tikzpicture}[style=cfg]
+  \node (1) {1};
+  \node [below of=1] (2) {2};
+  \node [below of=2] (3) {3};
+  \node [below of=3] (4) {4};
+  \node [below of=4] (5) {5};
+
+  \node [right=2cm of 1] (1f) {1f};
+  \node [below of=1f] (2f) {2f};
+
+  \node [right=2cm of 1f] (1g) {1g};
+  \node [below of=1g] (2g) {2g};
+
+  \path[style=cfgpath]
+    (1) edge node [left] {x=0} (2)
+    (2)	edge [style={mygreen}] node [above, pos=.4] {f()} (1f)
+    (1f) edge node [right] {x++} (2f)
+    (2f) edge [style={mymauve}] node [above] {return} (2g)
+    (2f) edge [style={mygreen}] node [left, pos=.3] {return} (3)
+    (1g) edge [style={mymauve}] node [above] {f()} (1f)
+    (2g) edge [style={myblue}, bend left] node [left, pos=.4] {return} (4)
+    (3) edge [style={myblue}, bend right] node [above, pos=.48] {g()} (1g)
+
+    (4) edge [right] node {printf("\%i", x)} (5);
+\end{tikzpicture}
+\end{minipage}
+  \caption{Control-flow graph with multiple procedures}
+  \label{fig:ivp}
+\end{figure}
+
+The problem now is that not all paths are valid, i.e. some paths would be considered for the solution despite not being possible executions of the program. This happens because we do not ensure that function calls return to the right place
+For the example above, there is only one valid path (1-2-1f-2f-3-1g-1f-2f-2g-4-5), but we would consider infinitely many paths because of the circle (3-1g-1f-2f-3).
+
+An interprocedural flow graph $G^*$, as defined in \cite{Sharir:1981:CallStrings}, solves this problem by only allowing so called interprocedurally valid paths ($\mathit{IVP}(G^*)$). It is defined as $(N^*,E^*,e_{main})$ where $e_{main}$ is the entry point of the program.
+
+An interprocedurally valid path $\pi \in \mathit{IVP}(G^*)$ can be determined by its call-string $cs(\pi)$, which is the subsequence of edges that have not been returned yet. Both can be inductively defined on the length of $\pi$:
+\begin{itemize}
+\item if $\pi = \epsilon$ then $\pi \in \mathit{IVP}(G^*)$ and $cs(\pi) = \epsilon$
+\item if $\pi = \pi' N$ and $\gamma = cs(\pi')$ then $\pi \in \mathit{IVP}(G^*)$ iff $\pi' \in \mathit{IVP}(G^*)$ and one of the following holds:
+\subitem $N$ is neither a call nor a return edge. $cs(\pi) = \gamma$.
+\subitem $N$ is a call edge. $cs(\pi) = \gamma N$.
+\subitem $N$ is a return edge, $\gamma$ is of the form $\gamma' C$ and $N$ corresponds to the call edge $C$. $cs(\pi) = \gamma'$.
+\end{itemize}
+
+The domain is then augmented by this information and the transfer functions for call and return edges modified to ignore invalid edges based on it. Therefore all paths over edges from $E^*$ are guaranteed to be valid.
+
+Although Goblint uses a different approach, this concept of inter-procedural paths is used in the following, since it allows to apply the same methods for both settings.
+
+
+%\section{Constraint systems}
+%Knaster–Tarski theorem\\
+%Kleene fixed-point theorem\\
+%monotonic function f on complete partial order L -> f has least fix-point\\
+%different possibilities for solving: kleene, round-robin, work-list\\
+%reachability analysis as an example with constraint system etc.
+
+
+\section{Soundness vs. precision}
+Since the program behavior is merely approximated, one has to differentiate between information that may or must be true. For illustration May- and Must-Sets with their corresponding join operation and the meaning of the empty set are described below.
+\begin{description}
+\item[Must-Set] Property must be true for all elements, but not all elements with the property must be in the set. $\sqcap = \cap$, $\emptyset = \top$.
+\item[May-Set] Property may be true or not for each element, but all elements for which  it is true must be in the set. $\sqcap = \cup$, $\emptyset = \bot$.
+\end{description}
+If the sets contain elements we want to warn about, then the difference is
+\begin{description}
+\item[Must-Set] Precision: every warning is an error, but the program may still have other errors.
+\item[May-Set] Soundness: there might be false positives, but if there are no warnings, then the program is error-free.
+\end{description}
+The Must-Set is precise but maybe unsound and the May-Set is sound but maybe not very precise.
+
+
+\section{Goblint}
+Goblint uses a recursive demand-driven solver, i.e. constraints get evaluated recursively once they are needed. Results can be shared between different analyses using a query system.
+
+For interprocedural analysis global invariants are used to collect side-effects of functions. These invariants are then used for all calls.
+
+The results can be formatted as XML, JSON or HTML. The XML-output can be displayed in Eclipse via plugin. CIL is used for processing input files and generating a control flow graph (see \refFigure{GoblintComponents}).
+\graphic{GoblintComponents}{Components used by Goblint \cite{Vojdani10Thesis}}
+
+CIL stands for C Intermediate Language and is an infrastructure for C program analysis and transformation \cite{Necula:2002:CIL:647478.727796}. It is used to generate a high-level representation of the input C program. CIL's output can be displayed by invoking Goblint with the option \verb|--set justcil true|. It does a source-to-source transformation that simplifies valid C programs into core constructs with very clean semantics. It is able to process ANSI-C programs and also programs using Microsoft C or GNU C extensions. Modules for control flow graphs, data flow and some analyses are also included.
+
+
+
+\chapter{Verifying correct usage of file handles}
+\label{chap:file}
+\section{Common problems using files}
+The following examples for common problems served as a guideline for the implementation and contain comments starting with \verb|WARN: | that indicate where warnings would be output.
+
+\refListing{01-ok.c} shows opening a file \verb|log.txt| and appending the line "Testing..." to it. At the end the file is closed.
+\listingC{01-ok.c}{Append text to file. Everything fine?}
+
+\paragraph*{Opening files}
+This might seem fine, since the file will be created if it does not exist, but what happens if the file cannot be written to?
+If the file exists but we do not have write access, running the code will result in a segmentation fault at \verb|fprintf|.
+We forgot to check the result of \verb|fopen| which returns a null pointer if the file could not be opened successfully.
+Accessing a file that doesn't exist for reading also results in a segmentation fault.
+
+This case is handled by the manual implementation and can also be checked using the specification language. In this example warnings should be issued that the file handle might not be open after line 5.
+
+A corrected version could look like \refListing{02-ok-checked.c}.
+\listingC{02-ok-checked.c}{Success check for fopen}
+For brevity reasons a success check is omitted in the following examples and it's assumed that the file could be opened without errors. The specification version can be easily adjusted to conform to this by just replacing a few states, whereas the manual implementation would always warn about maybe unopened file handles, unless the option \inlineML{ana.file.optimistic} is set to \inlineML{true}, in which case the analysis will assume opening files never fails (see \refSection{app:use_ana} on how to set options).
+\refListing{03-no-open.c} shows what happens if the file handle was not opened before using it. When running the program, this leads to a segmentation fault.
+\listingC{03-no-open.c}{Missing fopen}
+
+\paragraph*{Closing files}
+Not closing files is not necessarily an error since file handles are closed at the end of the program anyway, but it's not good practice and might lead to unwanted behavior.
+Imagine a program that is done writing important information to a file but does not close it. What happens if the program gets stuck in calculations or on user input and other programs want to use the file? See \refListing{04-user-input.c} for example. Without the call to \verb|fclose|, the written content might not be flushed until the program terminates. Starting with some content in the file resulted in an empty file at the point of user input.
+\listingC{04-user-input.c}{A reason for closing files: flushing}
+
+\refListing{05-no-close.c} has comments for warnings that would be issued. There is a warning where the file was opened and a summary of unclosed files at the end of the program.
+\listingC{05-no-close.c}{Missing fclose}
+
+\paragraph*{Open mode}
+Writing to a file which is opened read-only as demonstrated in \refListing{06-open-mode.c} is another problem. Bugs of this kind might be hard to find, since this executes without errors - there is just nothing written to the file.
+Analogously, reading from a file that is opened write-only is the same as reading an empty file.
+\listingC{06-open-mode.c}{Wrong open mode: writing to a read-only file}
+\refTable{open_modes} lists the modes in which a file can be opened.
+To open a file in binary mode the character `b' is appended to the mode string or inserted before `+', e.g. `rb', `r+b' or `rb+'.
+So `r' and `rb' are the only modes that do not support write operations.
+\begin{table}[ht]
+\centering
+\begin{tabular}{ll}\hline
+Mode & Description\\\hline
+r  & reading\\
+w  & writing (file need not exist)\\
+a  & appending (file need not exist)\\
+r+ & reading and writing, start at beginning\\
+w+ & reading and writing (overwrite file)\\
+a+ & reading and writing (append if file exists)
+\end{tabular}
+\caption{Possible modes for opening a file}
+\label{tbl:open_modes}
+\end{table}
+
+Other functions like \verb|fscanf, fputc, fgetc, fwrite, fread| are not shown here, since the problems are similar to \verb|fprintf|.
+
+
+\section{Concrete and abstract semantics}
+For the concrete semantics we are only interested in the effects of statements on file handles. Other semantics are intentionally left undefined.
+File handles are L-values pointing to a structure \verb|FILE| which keeps information about the file descriptor, stream position, pointer to the stream's buffer and some status flags.
+We differentiate between the states
+\begin{itemize}
+\item unopened (struct not initialized)
+\item maybe opened a file in a specific mode (before success check)
+\item opened a file in a specific mode (after success check)
+\item closed
+\end{itemize}
+The type of the concrete state is then
+\begin{align}
+S' &: \mathit{Lval} \to (\mathit{File} * \mathit{Mode} * \mathit{Checked}) + ()\\
+S  &: S' * \mathit{Other}
+\end{align}
+where $S'$ is a mapping from L-values to the opened or closed state. A L-value is unopened if it is not mapped.
+The types $\mathit{File}$ and $\mathit{Mode}$ are strings, $\mathit{Checked}$ is Boolean.
+$\mathit{Other}$ contains the state of everything other than file handles and can be used for evaluating expressions.
+
+For the open mode we define the predicates (with $\mathcal{L}(\mathit{regex})$ being the set generated by the regular expression $\mathit{regex}$)
+\begin{align}
+\mathit{readwrite}(m) &= m \in \mathcal{L}(\text{[rwa] (\textbackslash+ | \textbackslash+b | b\textbackslash+)})\\
+\mathit{readable}(m) &= \mathit{readwrite}(m) \vee m \in \{\text{r}, \text{rb}\}\\
+\mathit{writable}(m) &= \mathit{readwrite}(m) \vee m \in \mathcal{L}(\text{[wa] b?})\\
+\mathit{unkown}(m) &= \neg \mathit{readable}(m) \wedge \neg \mathit{writable}(m)
+\end{align}
+
+The \verb|FILE| structure is only supposed to be accessed by functions defined in \verb|stdio.h| or \verb|wchar.h|.
+Since there are many functions for reading and writing files defined by \verb|stdio.h|, we summarize them using
+
+%$write(p) = \{$
+%\inlineC{fprintf(p, ...), vfprintf(p, ...),
+%fputc(_, p), fputs(_, p), putc(_, p),
+%fwrite(_, _, _, p)} $\}$
+%
+%$read(p) = \{$
+%\inlineC{fscanf(p, ...), vfscanf(p, ...),
+%fgetc(p), fgets(_, _, p), getc(p),
+%fread(_, _, _, p)} $\}$
+
+\begin{align}
+write(p) &= \{
+\text{fprintf(p, ...)}, \text{vfprintf(p, ...)},
+\text{fputc(\_, p)}, \text{fputs(\_, p)},    \text{putc(\_, p)},
+\text{fwrite(\_, \_, \_, p)} \}\\
+read(p)  &= \{ \text{fscanf(p, ...)},  \text{vfscanf(p, ...)},
+\text{fgetc(p)},    \text{fgets(\_, \_, p)}, \text{getc(p)},
+\text{fread(\_, \_, \_, p)} \}
+\end{align}
+The header file \verb|wchar.h| extends these by various additional functions for work with C wide strings, which are omitted here. 
+
+Next we define the transfer functions for file handles on the concrete state $(s,o) : S$.
+Below $\llbracket Pos(p) \rrbracket$ and $\llbracket Neg(p) \rrbracket$ are shorthand for all expressions where $p$ is checked, e.g. \verb|p|, \verb|!p|, \verb|p==NULL|, \verb|p!=0|, \verb|p>0|.
+Similarly $\llbracket \text{p1 = p2} \rrbracket$ includes statements like \verb|p1++|, \verb|p1-=3|, \verb|p[0].file=fun()+1| and so on.
+
+\begin{align}
+\conEf{p = fopen(f, m)}{(s,o)} &= (s \oplus \{ \conEf{p}{o} \mapsto (\conEf{f}{o}, \conEf{m}{o}, \mathit{false}) \}, o)\\
+\conEf{Pos(p)}{(s,o)} &= \left\{\begin{array}{ll}
+	(s \oplus \{ \conEf{p}{o} \mapsto (f, m, \mathit{true}) \}, o) & \text{if } s(\conEf{p}{o}) = (f,m,\mathit{false})\\
+	(s,o) & \text{else}
+	\end{array}\right.\\
+\conEf{Neg(p)}{(s,o)} &= \left\{\begin{array}{ll}
+	(s \ominus \{ \conEf{p}{o} \mapsto (f, m, c) \}, o) & \text{if } s(\conEf{p}{o}) = (f,m,c)\\
+	(s,o) & \text{else}
+	\end{array}\right.\\
+\conEf{fclose(p)}{(s,o)} &= (s \oplus \{ \conEf{p}{o} \mapsto () \}, o)\\
+\conEf{$write(p)$}{(s,o)} &= (s,o)\\
+	\text{ and}&
+	\left\{\begin{array}{ll}
+	\text{something written} & \text{if } s(\conEf{p}{o}) = (f,m,\mathit{true}) \wedge writable(m)\\
+	\text{nothing written} & \text{if } s(\conEf{p}{o}) = (f,m,\mathit{true}) \wedge \neg writable(m)\\
+	& \vee \: s(\conEf{p}{o}) = ()\\
+	\text{segmentation fault} & \text{else}
+	\end{array}\right.\\
+\conEf{$read(p)$}{(s,o)} &= (s,o)\\
+	\text{ and}&
+	\left\{\begin{array}{ll}
+	\text{something read} & \text{if } s(\conEf{p}{o}) = (f,m,\mathit{true}) \wedge readable(m)\\
+	\text{nothing read} & \text{if } s(\conEf{p}{o}) = (f,m,\mathit{true}) \wedge \neg readable(m)\\
+	& \vee \: s(\conEf{p}{o}) = ()\\
+	\text{segmentation fault} & \text{else}
+	\end{array}\right.\\
+\conEf{p1 = p2}{(s,o)} &= \left\{\begin{array}{ll}
+	(s \oplus \{ \conEf{p1}{o} \mapsto x \}, o) & \text{if } (\conEf{p2}{o}, x) \in s\\
+	(s \ominus \{ \conEf{p1}{o} \mapsto y \}, o) & \text{if } (\conEf{p2}{o}, x) \notin s \wedge (\conEf{p1}{o}, y) \in s\\
+	(s,o) & \text{else}
+	\end{array}\right.
+\end{align}
+
+All other statements are assumed to not affect the state of file handles or affect it in a way that is not relevant for us, e.g. changing the position indicator inside the file with \verb|fseek| or similar functions.
+
+Remembering the interprocedural flow graph $G^* = (N^*, E^*, e_{main})$ we are now looking for a function
+\begin{align}
+\sigma : N^* \to 2^S
+\end{align}
+that gives us the set of possible states for a program point.
+That means that for every valid path $\pi \in \mathit{IVP}(G^*)$ from $e_{main}$ to some $n \in N^*$ and start state $s_0$ the concrete state must be included in the set:
+\begin{align}
+\sigma[n] &\supseteq \{ \llbracket \pi \rrbracket \; s_0 \}		&\forall n \in N^*, \pi = (e_{main},\_,\_)...(\_,\_,n) \in \mathit{IVP}(G^*)
+% better?: [[\pi]] s_o \in \sigma[n]
+\end{align}
+
+To describe concrete values $x \in 2^S$, we introduce a domain with abstract values $a \in \mathbb{D}$ and a description relation $\Delta$ with
+\begin{align}
+x \Delta a_1 \wedge a_1 \sqsubseteq a_2 \Longrightarrow x \Delta a_2
+\end{align}
+Between $2^S$ and $\mathbb{D}$ there is a Galois connection which allows to define a concretization function $\gamma$ that yields all described concrete values
+\begin{align}
+\gamma(a) = \{ x \; | \; x \Delta a \}
+\end{align}
+
+Define your abstract semantics transformations:\\
+  - define $[[ \cdot ]]^\sharp$  (you state that you have defined it --- in the appendix)\\
+  - you can talk about that we use assign, ... enter and combine in an CFG instead of
+      $[[ ]]^\sharp$ over an interprocedural flow graph (but that is just details)\\
+  - now you assure people that your $[[l]]^\sharp$  is sound:\\
+    + that $\gamma([[ l ]]^\sharp x) \geq \bigcup_{x' \in \gamma(x)} \{ [[ l ]] x' \}$\\
+
+Define a constraint system:
+  - $\forall (x,l,y)\in E^* : \sigma'[y] \supseteq [[l]]^\sharp (\sigma'[x])$\\
+
+
+As you have a Galois connection, $\sigma[x] \leq \gamma(\sigma[x])$.\\
+
+
+\section{A domain for representing file handle usage}
+Since it should be possible to track multiple file handles, a map \textbf{M} from variables (or better L-values) \textbf{K} to another domain \textbf{V} is needed. The bottom value for \textbf{M} is the empty map.
+The domain \textbf{V} represents one file handle. \refListing{fileDomainType.ml} shows how its type \verb|t| is defined.
+\listingML{fileDomainType.ml}{Type of the file handle domain}
+\begin{description}
+\item[t] is a tuple consisting of a Must- and a May-Set of records.
+
+\item[record] contains the variable \verb|var| that was used as a key, the location stack \verb|loc| and \verb|state|.
+
+\item[state] can be \verb|Open(filename, mode)|, \verb|Closed| or \verb|Error| (used for the error-branch of \verb|fopen|).
+
+\item[mode] can be \verb|Read| if the file is opened read-only with mode \verb|r| or \verb|Write| for all other modes.
+
+\item[loc] is a stack of locations from the assignment to \verb|var| down to the use of the stdio-function. It is maintained as a special value inside \textbf{M}. On entering a function, the location of the call site is pushed, and popped again when leaving the function.
+\end{description}
+Each key \textit{must} have at most one state but \textit{may} have at least one state.
+In other words: the Must-Set starts with one element and can only shrink to zero elements; the May-Set also starts with one element and can only grow.
+Although the Must-Set could be replaced by a more efficient type, it is easier to work with sets for both.
+
+Assume the Must-Set is empty and the May-Set contains multiple elements. Even if the correct state is not known, these alternatives can be used to answer questions about the state during the analysis.
+
+As an example let the May-Set contain records with the states \verb|Open(..., Read)| and \verb|Open(..., Write)|. In this case it is safe to say that the file is opened - if it is writable on the other hand is unknown. Another example: if all states are \verb|Closed| but with different locations, it is safe to say that the file is closed. %TODO is this ok for join? how is it done?
+
+Since an empty May-Set would never occur, we can use it to encode the case where we have no knowledge anymore and the state could be anything (e.g. after an unsupported operation like pointer arithmetic).
+For a file handle \verb|M[k]| with key \verb|k| we therefore define 
+\begin{align}
+M[k] = \bot &\Leftrightarrow k \notin M\\
+M[k] = \top &\Leftrightarrow M[k] = (\emptyset, \emptyset).
+\end{align}
+The ordering and the join operation are defined as
+\begin{align}
+(a,b) \leq (c,d) &\Leftrightarrow c \subset a \wedge b \subset d\\
+(a,b) \sqcap (c,d) &= (a \cap c, b \cup d).
+\end{align}
+
+%\refFigure{fileDomain} shows the ordering that is used. May-Sets with length $n$ are greater than those of length $m$ iff $1<m<n$.
+%\begin{figure}[ht]
+%  \centering
+%\begin{tikzpicture}[]
+%  \node (1) {May \{x\}};
+%  \node [below of=1] (2) {May \{x, y, z ...\}};
+%  \node [below of=2] (3) {Must \{x\}};
+%  \node [below of=3] (4) {May \{\}};
+%
+%  \path[every node/.style={font=\sffamily\small}]
+%    (1) edge node {} (2)
+%    (2) edge node {} (3)
+%    (3) edge node {} (4);
+%\end{tikzpicture}
+%  \caption{Partial order of the file domain}
+%  \label{fig:fileDomain}
+%\end{figure}\\
+
+%\verb|join x y = {records of x}| $\cup$ \verb|{records of y}|.\\
+%\begin{align*}
+%join(x,y)=\left\{\begin{array}{cl}
+%records(x), & \mbox{if }may(x) \wedge |records(x)|=1\\
+%records(y), & \mbox{if }may(y) \wedge |records(y)|=1\\
+%records(x) \cup records(y), & \mbox{else} \end{array}\right.
+%\end{align*}
+
+The location stack is kept because the location of the stdio-function might not always be the location where the warning should be issued. \refListing{07-location-stack.c} defines a custom function for opening files. The warnings should be placed at the call to this function instead of at the call to \verb|fopen|.
+%TODO does this work correctly??
+\listingC{07-location-stack.c}{Location of warning when using custom function for opening files}
+However, using a normal stack could lead to infinite strictly ascending chains as shown in \refListing{08-location-stack-chain.c}. Once the uninitialized variable \verb|b| contains 0, the file will be opened. This normally happens pretty fast before overflowing the call stack. So the program runs fine, but the analysis would get stuck with an ever growing location stack. To avoid this, the location stack behaves like an ordered set, i.e. if a location is already contained in the stack, it will not be pushed. %TODO check code!
+\listingC{08-location-stack-chain.c}{Infinitely growing location stack}
+TODO: limitation: %TODO
+\listingC{09-location-stack-alternate.c}{Mutually recursive functions and the location stack}
+
+
+\section{An analysis for checking file handle usage}
+The analysis uses the following transfer functions, which are called by the framework. The used domain is \verb|D| and \verb|D.t| its type. The types \verb|lval| (L-value), \verb|exp| (expression), \verb|fundec| (function declaration) and \verb|varinfo| (variable) come from CIL.
+%\begin{lstlisting}[language=ML]
+%let assign ctx (lval:lval) (rval:exp) : D.t = ...
+%let branch ctx (exp:exp) (tv:bool) : D.t = ...
+%let body ctx (f:fundec) : D.t = ...
+%let return ctx (exp:exp option) (f:fundec) : D.t = ...
+%let enter ctx (lval: lval option) (f:varinfo) (args:exp list) : (D.t * D.t) list = ...
+%let combine ctx (lval:lval option) fexp (f:varinfo) (args:exp list) (au:D.t) : D.t = ...
+%let special ctx (lval: lval option) (f:varinfo) (arglist:exp list) : D.t = ...
+%\end{lstlisting}
+\begin{description}
+\item \inlineML{assign (lval:lval) (rval:exp)}\\
+Assignment of an expression \verb|rval| to a L-value \verb|lval|.\\
+Warn about changed file pointer if \verb|lval| $\in$ \verb|D| and set the entry to $\top$.
+
+\item \inlineML{branch (exp:exp) (tv:bool)}\\
+Enter a branch where the condition \verb|exp| is either true or false, depending on \verb|tv|.\\
+Used to handle error-case of \verb|fopen|. If \verb|exp| compares an L-value \verb|lval| with an integer and the expression can be transformed into \verb|lval==0| with \verb|tv| being true, then change the state to \verb|Error|.
+
+\item \inlineML{body (f:fundec)}\\
+Called when the body of a function is entered.
+
+\item \inlineML{return (exp:exp option) (f:fundec)}\\
+Called once a function returns, \verb|exp| contains the expression if one is returned.\\
+If the returning function is \verb|main|, print out a summary of unclosed files if there are any.
+If a L-value is returned, save it as a special entry \verb|return_var| in the domain.
+Finally remove all formals and locals of the function from the domain.
+
+\item \inlineML{enter (lval: lval option) (f:varinfo) (args:exp list)}\\
+Enter a function \verb|f| with arguments \verb|args| and the returned value optionally being saved to \verb|lval|.\\
+Save the current location to the location stack if the function is not \verb|main|.
+
+\item \inlineML{combine (lval:lval option) fexp (f:varinfo) (args:exp list) (au:D.t)}\\
+Leave a function \verb|f| and combine the updated domain \verb|au| with the context of the call site. Counterpart to \verb|enter|.\\
+Pop the top element from the location stack. If \verb|return_val| is set and there is an \verb|lval| which is assigned to, save the entry \verb|return_val| points to with \verb|lval| as a new key in the domain.
+
+
+\item \inlineML{special (lval: lval option) (f:varinfo) (arglist:exp list)}\\
+Called for functions that are not defined in the program.\\
+Add the current location to the location stack. Issue warnings and/or modify domain depending on \verb|lval| and the called function. The details are described below.
+\end{description}
+
+
+
+\chapter{A general specification for regular safety properties}
+\section{Representing the state of properties using automata}
+Our goal is to abstract the semantics of a program in order to verify properties given by a specification.
+The behavior of a system can be described using state diagrams, consisting of a finite number of states and transitions between those states.
+Such state diagrams can be formalized by so called finite state machines or finite automata.
+The transitions can be deterministic (at most one transition for each state and input) or nondeterministic (multiple possible next states for each state and input).
+Both deterministic finite automata (DFA) and nondeterministic finite automata (NFA) are usually defined by a 5-tuple $(S, \Sigma, \delta, S_0, F)$, consisting of
+\begin{itemize}
+\item a finite set of states (S)
+\item a finite set of input symbols called the alphabet ($\Sigma$)
+\item a transition function ($\delta : S \times \Sigma \rightarrow S$)
+\item a start state ($S_0 \in S$)
+\item a set of accept states ($F \subseteq S$).
+\end{itemize}
+The automaton then accepts a string $w = a_1 a_2 ... a_n$ over the alphabet $\Sigma$ if there is a sequence of states $r_0, r_1, ..., r_n$ in $S$ with
+\begin{itemize}
+\item $r_0 = S_0$
+\item $r_{i+1} = \delta(r_i, a_{i+1})$, for $i=0, ..., n-1$
+\item $r_n \in F$.
+\end{itemize}
+Such an automaton can either accept or not accept a given input. In our case this would require us to construct an automaton for every property we want to warn about. For each input we would do the transitions for all automata and every time an automaton reaches an end state, we would issue the corresponding warning and reset the automaton. Since we are only interested in the warnings this is not the best approach.
+
+A better suited solution for our purpose is a finite state transducer, which has two tapes: one for input and one for output. For defining the output function, there are two possibilities:
+\begin{itemize}
+\item a Moore machine determines the output values by its current state,
+\item a Mealy machine determines the output values by its current state and the current input.
+\end{itemize}
+The Mealy machine was chosen as a better fit for the specification since it is more flexible and avoids introducing intermediate states that are used solely for output. Furthermore it keeps the number of states low ($n^2$ vs. $n$ possible output values for $n$ states), which is good for visualization.
+
+Compared to a finite automaton a Mealy machine is a 6-tuple $(S, S_0, \Sigma, \Lambda, T, G)$, consisting of
+\begin{itemize}
+\item a finite set of states (S)
+\item a start state ($S_0 \in S$)
+\item a finite set called the input alphabet ($\Sigma$)
+\item a finite set called the output alphabet ($\Delta$)
+\item a transition function ($T : S \times \Sigma \rightarrow S$)
+\item an output function ($G : S \times \Sigma \rightarrow \Lambda$).
+\end{itemize}
+The transition and output functions can be coalesced into a single function ($T' : S \times \Sigma \rightarrow S \times \Lambda$), which is meant when referring to transitions from now on.
+A transition, which corresponds to an edge in the graph, therefore consists of an input and an output value.
+
+For the specification we use a Mealy machine where
+\begin{itemize}
+\item the states define the abstract semantics (e.g. file handle is open or closed),
+\item the input alphabet consists of the statements of the program,
+\item the output alphabet consists of the warnings that are output and the empty element $\epsilon$ to avoid output.
+\end{itemize}
+Using concrete statements for the transitions would not be very flexible, which is why constraints are used instead. The constraints for each state form an extra automaton and work similar to pattern matching in functional languages: they can contain identifiers for binding values and wildcards for matching everything. Once a constraint matches the input statement, the transition is taken. For string constants regular expressions are also supported.
+This allows a very concise specification of alternatives.
+
+
+%\section{Supported types of constraints}
+% see grammar: function calls
+%TODO check comparison constraints after assignment
+
+
+\section{A domain for representing the state of properties}
+Properties refer to an object - this could be the whole program or something inside the program, which can be addressed by a L-value. For the file handles this was a L-value at a certain position in the checked statements and allowed to differentiate between multiple handles.
+Apart from L-values special keys are used to guarantee that the state is always assigned to some key.
+One such special key is used for global constraints, i.e. constraints that define no key. This could be used to verify that one function is always called before the other globally. One could also implement other special keys, e.g. to refer to the current function or thread.
+
+The domain for the specification therefore is very similar to the domain for file handles. It consists of a map \textbf{M} with L-values as a key \textbf{K} and a domain \textbf{V} for its values. \textbf{V} is a tuple of May- and Must-Set, each containing records with a key, location stack and state (see \refListing{specDomainType.ml}).
+\listingML{specDomainType.ml}{Type of the specification domain}
+The main difference is that the state is a string instead of a sum type, which means that it is not fixed at compile-time but comes from the specification file at run-time.
+
+
+\section{Specification format}
+A specification file contains two types of definitions:
+\begin{itemize}
+\item warnings, consisting of an identifier and text
+\item edges, consisting of a start state, optional outputs, optional forwarding, an end state and a constraint.
+\end{itemize}
+Definitions are separated by line breaks and can be interleaved since the whole file is parsed and split into a list of warnings and a list of edges. Empty lines and C-style comments are ignored.
+
+\refListing{../mini.spec} gives a feel for the syntax using a small example for file handles. The type and amount of whitespace for separation is not important.
+\listingC{../mini.spec}{A very small specification for file handles}
+The semantics and extensions to the syntax are described below.
+\begin{description}
+\item[warnings]
+Identifiers of warnings can also be used as a target by edges. Such transitions have an implicit back edge to the previous state.
+
+Multiple warnings can be specified like this: \verb|a -w1,w2,w3> b c()| (\verb|w1|, \verb|w2| and \verb|w3| will be output if the automaton is in state \verb|a| and the constraint \verb|c| matches).
+
+\item[states]
+The states $S$ of the Mealy machine are implicitly defined by the start and end states used by edges.
+
+\item[start state]
+The start state of the first transition defines the start state of the automaton.
+
+\item[end states]
+End states are an extension that allows to warn about certain states at the end of the program. A state \verb|x| is marked as an end state by the edge \verb|x -> end _|.
+At the end of the program the warnings with the identifiers \verb|_end| and \verb|_END| are issued for all states that are not marked as an end state. The difference between the two is the location for the warning: \verb|_end| places it at the location for that state, \verb|_END| places it at the end of the \verb|main| function. For the latter \verb|$| can be used as a placeholder for the list of keys.
+
+\item[wildcard]
+An edge with \verb|_| as a constraint matches everything. Wildcards can also be used inside expressions.
+
+\item[forwarding]
+Edges with a two-headed arrow like \verb|->>| (or \verb|-w1,w2>>| etc.) are forwarding edges, which will continue matching the same statement for the target state.
+\end{description}
+The grammar for parsing the specification is shown below in a modified Backus-Naur-Form where the symbols $*, +, ?$ are used as in regular expressions. The implementation is based on the lexer and parser generators ocamllex and ocamlyacc. Single- and multi-line comments are supported and already filtered out by the lexer.
+
+\begin{grammar}
+<file> ::= <definition> EOL \verb|/* definitions are seperated by line breaks */|
+\alt <definition> EOF
+\alt EOL \verb|/* end of line */|
+\alt EOF \verb|/* end of file */|
+
+<word> ::= \verb|[_0-9a-zA-Z]|
+
+<identifier> ::= \verb|[_a-zA-Z]| <word>* \verb|/* e.g. foo, _foo, _1, but not 1a */|
+
+<ws>   ::= \verb|[ \t]| \verb|/* whitespace: space or tab */|
+
+<string> ::= ... \verb|/* single- or double-quoted, backslash escapes */|
+
+<node> ::= <word> <ws>+ <string>
+
+<edge> ::= <word> <ws>* `-' (<word> (`,' <word>)*)? `>'? `>' <ws>* <word> <ws>+
+
+<definition> ::= <node>
+\alt <edge> <stmt>
+
+<stmt> ::= <var> `=' <expr>
+\alt <expr>
+
+<key> ::= `\$' <word>
+
+<var> ::= <key>
+\alt <identifier>
+
+<regex> ::= `r' <string>
+
+<arguments> ::= <expr>
+\alt <arguments> `,' <expr>
+
+<binop> ::= `<' \alt `>' \alt `==' \alt `!=' \alt `<=' \alt `>=' \alt `+' \alt `-' \alt `*' \alt `/'
+
+<expr> ::= `(' <expr> `)'
+\alt <regex>
+\alt <string>
+\alt <bool> \verb|/* true or false */|
+\alt <var>
+\alt <identifier> `(' <arguments> `)' \verb|/* function call */|
+\alt `_' \verb|/* wildcard */|
+\alt <expr> <binop> <expr>
+\end{grammar}
+The grammar used for the implementation also evaluates numerical expressions and comparisons as far as possible. This has been omitted above for clarity.
+
+
+\section{Making the specification more concise}
+Even for something rather small like the file handle example, the automaton can become very big and hard to read for humans.
+
+In order to avoid redundant parts, forwarding is supported. Forwarding edges are displayed as dotted lines in the generated graphs and can also contain constraints. If such an edge is taken, the current input is again evaluated in the target state.
+
+Another feature are wildcards. In each state pattern matching is done on the constraints and the transistion of the first matching constraint is taken. Wildcards can be used anywhere, e.g. as a function argument or as a last constraint which always matches.
+
+
+
+\chapter{Example use cases}
+%http://smallcultfollowing.com/babysteps/pubs/2013.07.17-NEU.pdf
+%What Rust doesn’t have...
+%– Null pointers
+%– Dangling pointers
+%– Segmentation faults
+%– Data races
+%– Mandatory GC
+
+\section{File handles redux}
+\refListing{../file.spec} shows a specification for file handles like implemented in \refChapter{file}. It is optimistic about \verb|fopen|, i.e. there are no warnings for missing success checks.
+\listingC{../file.spec}{An optimistic specification for file handle usage}
+
+The resulting graph can be seen in \refFigure{file}. %TODO
+TODO format differently
+\begin{landscape}
+\graphic{file}{Automaton for optimistic file handle usage}
+\end{landscape}
+
+
+\section{Locks}
+Different kinds of locks + table of functions for them.
+Locks with counters not regular -> see extensions.
+
+
+\section{Heap usage: malloc and free}
+
+
+
+%\chapter{Providing a better interface}
+%\section{Web frontend}
+%Screenshots.
+%Online version.
+
+
+%\chapter{Tests and real world examples}
+%Test some specifications on kernel code?
+%Benchmarks?
+
+
+\chapter{Conclusion and future work}
+web frontend for definition and visualization of specification\\
+extensions to specification: conditions, queries
+
+\section{Non-regular safety properties}
+use CFG instead of DFA for specification
+E.g. locks with counters.
+
+
