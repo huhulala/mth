@@ -1,0 +1,41 @@
+\contentsline {chapter}{Zusammenfassung}{vii}{section*.1}
+\contentsline {chapter}{Abbildungsverzeichnis}{xi}{chapter*.3}
+\contentsline {chapter}{Tabellenverzeichnis}{xiii}{chapter*.4}
+\contentsline {chapter}{Listings}{xv}{chapter*.5}
+\contentsline {chapter}{\numberline {1}Einleitung}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Motivation}{1}{section.1.1}
+\contentsline {section}{\numberline {1.2}Problemstellung}{1}{section.1.2}
+\contentsline {section}{\numberline {1.3}Kostenabsch\"atzung f\"ur spritzgussgefertigte Bauteile}{2}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}Das Projekt GoCart}{2}{subsection.1.3.1}
+\contentsline {subsubsection}{Dome}{3}{section*.6}
+\contentsline {subsubsection}{H\"andisches Ausmessen von Domstrukturen}{3}{section*.7}
+\contentsline {subsubsection}{Rippen}{3}{section*.8}
+\contentsline {subsubsection}{H\"andisches Ausmessen von Rippenstrukturen}{3}{section*.9}
+\contentsline {section}{\numberline {1.4}Grundlagen der verwendeten computergrafischen Techniken}{3}{section.1.4}
+\contentsline {subsection}{\numberline {1.4.1}Triangulierte Geometrien}{4}{subsection.1.4.1}
+\contentsline {subsection}{\numberline {1.4.2}Kollisonspr\"ufung}{6}{subsection.1.4.2}
+\contentsline {subsection}{\numberline {1.4.3}3D-Selektion}{9}{subsection.1.4.3}
+\contentsline {section}{\numberline {1.5}Zielsetzung der Arbeit}{9}{section.1.5}
+\contentsline {section}{\numberline {1.6}Aufbau der Arbeit}{9}{section.1.6}
+\contentsline {chapter}{\numberline {2}Halbautomatische Erkennung zylindrischer Strukturen}{11}{chapter.2}
+\contentsline {section}{\numberline {2.1}Motivation}{11}{section.2.1}
+\contentsline {section}{\numberline {2.2}Heuristische Optimierung}{12}{section.2.2}
+\contentsline {section}{\numberline {2.3}Ermittlung der Position und Ausrichtung einer Domstruktur}{14}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Best-Fitting Plane mit Hauptkomponentenzerlegung}{15}{subsection.2.3.1}
+\contentsline {section}{\numberline {2.4}Zielfunktion des Optimierungsproblems}{16}{section.2.4}
+\contentsline {subsubsection}{Kollisionsvermeidung}{17}{section*.10}
+\contentsline {subsubsection}{Ermittlung von H\"ohe und Radius}{17}{section*.11}
+\contentsline {section}{\numberline {2.5}Ergebnisse}{18}{section.2.5}
+\contentsline {section}{\numberline {2.6}Fazit und Ausblick}{19}{section.2.6}
+\contentsline {chapter}{\numberline {3}Segmentierung von triangulierten Geometrien}{21}{chapter.3}
+\contentsline {section}{\numberline {3.1}Motivation}{21}{section.3.1}
+\contentsline {section}{\numberline {3.2}Notation und Klassifizierung von Segmentierungstechniken}{21}{section.3.2}
+\contentsline {section}{\numberline {3.3}Geometrische Eigenschaften und Unterteilungskriterien}{21}{section.3.3}
+\contentsline {section}{\numberline {3.4}Hierachisches Clustering}{21}{section.3.4}
+\contentsline {section}{\numberline {3.5}Filtern und Verfeinern der Segmentstruktur}{21}{section.3.5}
+\contentsline {chapter}{\numberline {4}Halbautomatische Rippenerkennung}{23}{chapter.4}
+\contentsline {section}{\numberline {4.1}Ermittlung der Rippenoberfl\"ache}{23}{section.4.1}
+\contentsline {section}{\numberline {4.2}Nachbearbeiten der ermittelten Rippenoberfl\"ache}{23}{section.4.2}
+\contentsline {section}{\numberline {4.3}Ermittlung der Rippentiefe}{23}{section.4.3}
+\contentsline {section}{\numberline {4.4}Implementierung und Ergebnisse}{23}{section.4.4}
+\contentsline {chapter}{Literaturverzeichnis}{25}{chapter*.12}

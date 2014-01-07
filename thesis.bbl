@@ -1,0 +1,56 @@
+\begin{thebibliography}{10}
+
+\bibitem{Ericson05}
+Christer Ericson.
+\newblock {\em {Real-Time Collision Detection}}.
+\newblock Morgan Kaufmann, 2005.
+
+\bibitem{FogelAIsimEvo}
+A.Ji; Walsh~M.J Fogel, L.J.;~Owens.
+\newblock {\em Artificial intelligence through simulated evolution}.
+\newblock Wiley and Sons, New York, USA, 1st edition, 1966.
+
+\bibitem{GoldbergAISimEvo}
+D.E Goldberg.
+\newblock {\em Genetic algorithms in search, optimization, and machine
+  learning}.
+\newblock Addison-Wesley, New York, USA, 1st edition, 1989.
+
+\bibitem{Gottschalk}
+Stefan Gottschalk.
+\newblock {\em {Collison Queries using Oriented Bounding Boxes}}.
+\newblock Chapel Hill, 2000.
+
+\bibitem{kennedyPSOConfPaper}
+R.C. Kennedy, J.;~Eberhart.
+\newblock {Particle Swarm Optimization}.
+\newblock In {\em Proc. of IEEE Int. Conf. on Neural Networks}, pages
+  1942--1948, 1995.
+
+\bibitem{Kirkpatrik}
+S.~Kirkpatrick.
+\newblock Optimization by simulated annealing.
+\newblock {\em Science}, pages 671--680, 1983.
+
+\bibitem{KozaAIsimEvo}
+R.J Koza.
+\newblock {\em Artificial intelligence through simulated evolution}.
+\newblock MIT Press, 1992.
+
+\bibitem{lavalle}
+Steven~M. LaValle.
+\newblock {\em {Planning Algorithms}}.
+\newblock Cambridge University Press, 2006.
+
+\bibitem{PQP}
+UNC Research~Group on~Modeling Physically-Based Simulation~andApplications.
+\newblock Pqp - a proximity query package.
+\newblock \url{http://www.cs.unc.edu/~geom/SSV/}, 05/2009.
+
+\bibitem{zachmannThesis}
+Gabriel Zachmann.
+\newblock {\em Virtual Reality in Assembly Simulation — Collision Detection,
+  Simulation Algorithms,and Interaction Techniques}.
+\newblock PhD thesis, Technische Universität Darmstadt., December 2010.
+
+\end{thebibliography}
