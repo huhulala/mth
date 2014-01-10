@@ -4,16 +4,17 @@
 \BOOKMARK [0][]{chapter*.5}{Listings}{}
 \BOOKMARK [0][]{chapter.1}{1 Einleitung}{}
 \BOOKMARK [1][-]{section.1.1}{1.1 Motivation}{chapter.1}
-\BOOKMARK [1][-]{section.1.2}{1.2 Problemstellung}{chapter.1}
-\BOOKMARK [1][-]{section.1.3}{1.3 Kostenabsch\344tzung f\374r spritzgussgefertigte Bauteile}{chapter.1}
-\BOOKMARK [2][-]{subsection.1.3.1}{1.3.1 Das Projekt GoCart}{section.1.3}
-\BOOKMARK [1][-]{section.1.4}{1.4 Grundlagen der verwendeten computergrafischen Techniken}{chapter.1}
-\BOOKMARK [2][-]{subsection.1.4.1}{1.4.1 Triangulierte Geometrien}{section.1.4}
-\BOOKMARK [2][-]{subsection.1.4.2}{1.4.2 Kollisonspr\374fung}{section.1.4}
-\BOOKMARK [2][-]{subsection.1.4.3}{1.4.3 3D-Selektion}{section.1.4}
-\BOOKMARK [1][-]{section.1.5}{1.5 Zielsetzung der Arbeit}{chapter.1}
-\BOOKMARK [1][-]{section.1.6}{1.6 Aufbau der Arbeit}{chapter.1}
-\BOOKMARK [0][]{chapter.2}{2 Halbautomatische Erkennung zylindrischer Strukturen}{}
+\BOOKMARK [1][-]{section.1.2}{1.2 Das Projekt GoCart}{chapter.1}
+\BOOKMARK [2][-]{subsection.1.2.1}{1.2.1 Kostenabsch\344tzung f\374r spritzgussgefertigte Bauteile}{section.1.2}
+\BOOKMARK [2][-]{subsection.1.2.2}{1.2.2 Dome}{section.1.2}
+\BOOKMARK [2][-]{subsection.1.2.3}{1.2.3 Rippen}{section.1.2}
+\BOOKMARK [1][-]{section.1.3}{1.3 Grundlagen der verwendeten computergrafischen Techniken}{chapter.1}
+\BOOKMARK [2][-]{subsection.1.3.1}{1.3.1 Triangulierte Geometrien}{section.1.3}
+\BOOKMARK [2][-]{subsection.1.3.2}{1.3.2 Kollisonspr\374fung}{section.1.3}
+\BOOKMARK [2][-]{subsection.1.3.3}{1.3.3 3D-Selektion}{section.1.3}
+\BOOKMARK [1][-]{section.1.4}{1.4 Zielsetzung der Arbeit}{chapter.1}
+\BOOKMARK [1][-]{section.1.5}{1.5 Aufbau der Arbeit}{chapter.1}
+\BOOKMARK [0][]{chapter.2}{2 Halbautomatische Erkennung von Domstrukturen}{}
 \BOOKMARK [1][-]{section.2.1}{2.1 Motivation}{chapter.2}
 \BOOKMARK [1][-]{section.2.2}{2.2 Heuristische Optimierung}{chapter.2}
 \BOOKMARK [1][-]{section.2.3}{2.3 Ermittlung der Position und Ausrichtung einer Domstruktur}{chapter.2}
@@ -32,4 +33,4 @@
 \BOOKMARK [1][-]{section.4.2}{4.2 Nachbearbeiten der ermittelten Rippenoberfl\344che}{chapter.4}
 \BOOKMARK [1][-]{section.4.3}{4.3 Ermittlung der Rippentiefe}{chapter.4}
 \BOOKMARK [1][-]{section.4.4}{4.4 Implementierung und Ergebnisse}{chapter.4}
-\BOOKMARK [0][]{chapter*.12}{Literaturverzeichnis}{}
+\BOOKMARK [0][]{chapter*.10}{Literaturverzeichnis}{}

@@ -1,4 +1,4 @@
-\chapter{Halbautomatische Erkennung zylindrischer Strukturen}
+\chapter{Halbautomatische Erkennung von Domstrukturen}
 \label{cha:psoDomes}	
 \dictum[deutsches Sprichwort]{Ein Bild sagt mehr als 1000 Worte.}	
 	
@@ -159,17 +159,15 @@ Wenn die Pr\"ufgeometrie und das Model nicht kollidieren, werden die Werte f\"ur
 {V=\lambda_{1}{r} + \lambda_{2}({-h})}
 \end{equation}
 
-Hierbei sind $\lambda_{1}$ und $\lambda_{2}$ Gewichtungsfaktoren, die  den Radius oder die H\"ohe st\"rker werten k\"onnen. Auf diese Weise kann das System so konfiguriert werden, das Dome mit Phasen an der Unterseite variabel erfasst werden k\"onnen: 
+Hierbei sind $\lambda_{1}$ und $\lambda_{2}$ Gewichtungsfaktoren, die  den Radius oder die H\"ohe st\"arker werten k\"onnen. Auf diese Weise kann das System so konfiguriert werden, das Dome mit Phasen an der Unterseite variabel erfasst werden k\"onnen: 
 
 \begin{figure}[ht]
-\centerline{
-	\includegraphics[width=0.7\columnwidth]{graphics/box.png}
-}
-\caption{Angephaster Zylinder mit unterschiedlichen $\lambda$-Werten.}
-\label{im:messlehre}
-\end{figure}
-
-\vspace{1cm}
+    \centering 
+    \subfigure[$\lambda_{1}$ = 3.0 und $\lambda_{2}$ = 1.0]{\includegraphics[width=0.28\textwidth]{graphics/domLamda1.png}} 
+		\subfigure[$\lambda_{1}$ = 1.0 und $\lambda_{2}$ = 3.0]{\includegraphics[width=0.28\textwidth]{graphics/domLamda2.png}}  
+\caption{Mittels der Faktoren $\lambda_{1}$ und $\lambda_{2}$ k\"onnen Radius und H\"ohe unterschiedlich gewichtet werden .} 
+\label{im:domes}
+\end{figure} 
 
 Algorithmus \ref{alg:goalFunction} fasst die Implementierung Zielfunktion  noch einmal zusammen:
 

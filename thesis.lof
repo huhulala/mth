@@ -1,17 +1,29 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {\relax 1.1}{\ignorespaces H\"andische Erzeugung eines parametrischen Zylinders.}}{4}{figure.1.1}
-\contentsline {figure}{\numberline {\relax 1.2}{\ignorespaces Triangulierung eines Zylinders mit unterschiedlicher Dreiecksanzahl.}}{5}{figure.1.2}
-\contentsline {figure}{\numberline {\relax 1.3}{\ignorespaces Triangulierung mit T-Scheitelpunkt.}}{6}{figure.1.3}
-\contentsline {figure}{\numberline {\relax 1.4}{\ignorespaces Erkennung von disjunkten Objekten.}}{7}{figure.1.4}
-\contentsline {figure}{\numberline {\relax 1.5}{\ignorespaces Bounding Volume Hierachie aus 5 Objekten. Auf der linken Seite wird die Szene rekursiv umh\"ullt so dass die Baumstruktur auf der rechten Seite daraus resultiert. }}{8}{figure.1.5}
-\contentsline {figure}{\numberline {\relax 1.6}{\ignorespaces Bounding Volume Hierachie \"uber den Dreiecken eines Objektes.}}{8}{figure.1.6}
-\contentsline {figure}{\numberline {\relax 1.7}{\ignorespaces Bounding Volume Hierachie \"uber den Dreiecken eines Objektes.}}{9}{figure.1.7}
+\contentsline {figure}{\numberline {\relax 1.1}{\ignorespaces Bauteil mit Rippen und Domen.}}{3}{figure.1.1}
+\contentsline {figure}{\numberline {\relax 1.2}{\ignorespaces H\"andisches Ausmessen einer Domstruktur.}}{4}{figure.1.2}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {einfacher Dom}}}{4}{figure.1.2}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {einfacher Dom}}}{4}{figure.1.2}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {einfacher Dom}}}{4}{figure.1.2}
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {einfacher Dom}}}{4}{figure.1.2}
+\contentsline {figure}{\numberline {\relax 1.3}{\ignorespaces H\"andisches Ausmessen einer Rippenstruktur.}}{4}{figure.1.3}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {einfacher Dom}}}{4}{figure.1.3}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {einfacher Dom}}}{4}{figure.1.3}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {einfacher Dom}}}{4}{figure.1.3}
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {einfacher Dom}}}{4}{figure.1.3}
+\contentsline {figure}{\numberline {\relax 1.4}{\ignorespaces Triangulierung eines Zylinders mit unterschiedlicher Dreiecksanzahl.}}{5}{figure.1.4}
+\contentsline {figure}{\numberline {\relax 1.5}{\ignorespaces Triangulierung mit T-Scheitelpunkt.}}{6}{figure.1.5}
+\contentsline {figure}{\numberline {\relax 1.6}{\ignorespaces Erkennung von disjunkten Objekten.}}{7}{figure.1.6}
+\contentsline {figure}{\numberline {\relax 1.7}{\ignorespaces Bounding Volume Hierachie aus 5 Objekten. Auf der linken Seite wird die Szene rekursiv umh\"ullt so dass die Baumstruktur auf der rechten Seite daraus resultiert. }}{8}{figure.1.7}
+\contentsline {figure}{\numberline {\relax 1.8}{\ignorespaces Bounding Volume Hierachie \"uber den Dreiecken eines Objektes.}}{9}{figure.1.8}
+\contentsline {figure}{\numberline {\relax 1.9}{\ignorespaces Bounding Volume Hierachie \"uber den Dreiecken eines Objektes.}}{9}{figure.1.9}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {\relax 2.1}{\ignorespaces Simulated Annealing in einem zweidimensionalen L\"osungsraum}}{13}{figure.2.1}
 \contentsline {figure}{\numberline {\relax 2.2}{\ignorespaces Best Fitting Plane f\IeC {\"u}r eine dreidimensionale Punktwolke.}}{15}{figure.2.2}
 \contentsline {figure}{\numberline {\relax 2.3}{\ignorespaces Parametrischer Messzylinder f\"ur Bauteilgeometrie.}}{16}{figure.2.3}
-\contentsline {figure}{\numberline {\relax 2.4}{\ignorespaces Angephaster Zylinder mit unterschiedlichen $\lambda $-Werten.}}{17}{figure.2.4}
+\contentsline {figure}{\numberline {\relax 2.4}{\ignorespaces Mittels der Faktoren $\lambda _{1}$ und $\lambda _{2}$ k\"onnen Radius und H\"ohe unterschiedlich gewichtet werden .}}{17}{figure.2.4}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {$\lambda _{1}$ = 3.0 und $\lambda _{2}$ = 1.0}}}{17}{figure.2.4}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {$\lambda _{1}$ = 1.0 und $\lambda _{2}$ = 3.0}}}{17}{figure.2.4}
 \contentsline {figure}{\numberline {\relax 2.5}{\ignorespaces Verschiedene Domtypen}}{18}{figure.2.5}
 \contentsline {subfigure}{\numberline {(a)}{\ignorespaces {einfacher Dom}}}{18}{figure.2.5}
 \contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Seitenrippen}}}{18}{figure.2.5}
