@@ -13,33 +13,36 @@ mit denen sich ein Automobilhersteller 2013 konfrontiert sieht. Dar\"uber hinaus
 
 Um diese Situation zu verbessern, geben die Automobilhersteller den Kostendruck an ihre Zulieferer weiter. So wirkt sich der Qualit\"ats - und Kostendruck und damit die Notwendigkeit, ein Bauteil schon w\"ahrend der Konstruktion fertigungsgerecht und somit kosteneffizient zu gestalten, direkt auf die Automobilzulieferer aus. Hieraus entsteht bei diesen Firmen die Nachfrage nach softwaretechnischen Werkzeugen, mit denen sich die Fertigungskosten eines Bauteils einfacher absch\"atzen lassen. 
 
-\section{Problemstellung}
-
 In der Automobilindustrie wird die Konstruktion s\"amtlicher Bauteile eines Fahrzeugs und ihr Zusammenbau zu Baugruppen mit Hilfe von Computer Aided Design-Systemen (CAD) realisiert. Dies hat unter anderem den Vorteil, das wichtige Untersuchungen bereits in einem fr\"uhen Stadium der Produktentwicklung durchgef\"uhrt werden k\"onnen. Das k\"onnen beispielsweise dynamische Simulationen des Fahrzeugverhaltens oder eben Kostenanalysen f\"ur Bauteile sein.
 
-Zur Kostenanalyse von CAD-Bauteilen ist es notwendig, eine Reihe von Eigenschaften, die mit dem Fertigungsverfahren variieren, zu erfassen. Mit Fertigungsverfahren oder Fertigungsart sind eine Reihe von hintereinander ausgef\"uhrten Prozessen gemeint, mit denen ein Produkt aus anderen G\"utern produziert wird. Beispielsweise wird beim Spritzgie{\ss}en erhitzter Kunststoff in einen Hohlraum (Formwerkzeug) gespritzt, in welchem er erst verdichtet wird und dann erkaltet. Bei mit Spritzguss gefertigten Bauteilen sind Eigenschaften, die die Fertigungskostem ma{\ss}geblich erh\"ohen (sogenannte Kostentreiber) zum Beispiel die minimale und maximale Dicke des K\"orpers oder die Anzahl der sogenannten Hinterschnitte. Die Erfassung dieser Eigenschaften sind f\"ur den Benutzer teilweise sehr aufwendig, so das eine softwaretechnische Unterst\"utzung w\"unschenswert ist. Im Rahmen dieser Arbeit sollen Werkzeuge entwickelt werden, wie bestimmte kostentreibende geometrische Strukturen, sogenannte Rippen und Dome, innerhalb von spritzgego{\ss}enen Bauteilen einfacher ermittelt werden k\"onnen. Im folgenden Abschnitt \ref{injection} wird kurz auf die das Spritzgu{\ss} Fertigungsverfahren eingegangenen und die Anwendung GoCart vorgestellt, in die die im Rahmen dieser Arbeit entwickelten Werkzeuge integriert wurden.
- 
-\section{Kostenabsch\"atzung f\"ur spritzgussgefertigte Bauteile}
+Zur Kostenanalyse von CAD-Bauteilen ist es notwendig, eine Reihe von Eigenschaften, die mit dem Fertigungsverfahren variieren, zu erfassen. Mit Fertigungsverfahren oder Fertigungsart sind eine Reihe von hintereinander ausgef\"uhrten Prozessen gemeint, mit denen ein Produkt aus anderen G\"utern produziert wird. Beispielsweise wird beim Spritzgie{\ss}en erhitzter Kunststoff in einen Hohlraum (Formwerkzeug) gespritzt, in welchem er erst verdichtet wird und dann erkaltet. Bei mit Spritzguss gefertigten Bauteilen sind Eigenschaften, die die Fertigungskostem ma{\ss}geblich erh\"ohen (sogenannte Kostentreiber) zum Beispiel die minimale und maximale Dicke des K\"orpers oder die Anzahl der sogenannten Hinterschnitte. Die Erfassung dieser Eigenschaften sind f\"ur den Benutzer teilweise sehr aufwendig, so das eine softwaretechnische Unterst\"utzung w\"unschenswert ist. Im Rahmen dieser Arbeit sollen Werkzeuge entwickelt werden, wie bestimmte kostentreibende geometrische Strukturen, sogenannte Rippen und Dome, innerhalb von spritzgego{\ss}enen Bauteilen einfacher ermittelt werden k\"onnen. Im folgenden Abschnitt \ref{injection} wird kurz auf die das Spritzgu{\ss} Fertigungsverfahren eingegangenen und die Anwendung \textit{GoCart} vorgestellt, in die die im Rahmen dieser Arbeit entwickelten Werkzeuge integriert wurden.
+
+\section{Das Projekt \textit{GoCart}}
+\label{goCart}
+
+Der praktische Teil der Masterarbeit wurde im Auftrag der Firma Teraport GmbH erstellt. Dieses Unternehmen besch\"aftigt sich mit der Entwicklung einer Reihe von modularen Softwarebausteinen (dem \textit{DMU-Toolkit}), mit denen sich computergeometische Untersuchungen an triangulierten Fahrzeugdaten durchf\"uhren lassen. Dies sind zum Beispiel die Berechnung von Montagepfaden oder die \"Uberpr\"ufung von umfangreichen Geometrien auf Kollisionen. Die Werkzeuge der Teraport GmbH beinhalten auch eine Visualisierungskomponente, die Anwendung \textit{DMU.View}, in die einzelne Module des \textit{DMU-Toolkit} integriert werden k\"onnen. Die Anwendung verf\"ugt \"uber Komponenten zum Laden und Visualisieren von Fahrzeugteilen.  
+
+Dar\"uber hinaus sind Teile des Erscheinungsbildes und der Funktionsumfang der Anwendung anpassbar, so das sie als Basis f\"ur Kundenprojekte dienen kann, in denen eine grafische Benutzeroberfl\"ache mit 3D-Visualisierung ben\"otigt wird. Ein solches Kundenprojekt ist die Entwicklung der Anwendung \textit{GoCart}, die im Auftrag der Volkswagen AG durchgeführt wird.
+
+\subsection{Kostenabsch\"atzung f\"ur spritzgussgefertigte Bauteile}
 \label{injection}
 
-Das Spritzgie{\ss}sen (oft umgangssprachlich auch als Spritzguss oder Spritzgussverfahren bezeichnet) ist ein sogenanntes Urformverfahren, das haupts\"achlich in der Kunststoffverarbeitung, aber auch beispielsweise beim Pulverspritzgie{\ss}en in der Metallverarbeitung eingesetzt wird.
+Das Spritzgie{\ss}en (oft umgangssprachlich auch als Spritzguss oder Spritzgussverfahren bezeichnet) ist ein sogenanntes Urformverfahren, das haupts\"achlich in der Kunststoffverarbeitung, aber auch beispielsweise beim Pulverspritzgie{\ss}en in der Metallverarbeitung eingesetzt wird.
 
 Mit Hilfe dieses Verfahrens lassen sich direkt nutzbare Teile in gro{\ss}er St\"uckzahl herstellen. Dazu wir der jeweilige verfl\"ussigte  Werkstoff in Pulverform in eine Werkzeugform eingespritzt. Diese Werkzeugform definiert die Form und die Oberfl\"achenstruktur des zu fertigen Bauteils. Mit dem Spritzgu{\ss}verfahren lassen sich Bauteile mit sehr geringen Toleranzen, also sehr hoher Fertigungsgenauigkeit, in gro{\ss}en Mengen wirtschaftlich produzieren. 
 
-Spritzgie{\ss}sen ist allerdings ein aufwendiger Fertigungsprozess, der nur bei hohen St\"uckzahlen wirtschaftlich ist. Hierbei machen die Kosten der Werkzeugh\"ullen ein gro{\ss}en Teil der Aufw\"ande aus. So ist die Rentabilit\"at von spritzgu{\ss}gefertigen Bauteilen erst bei einer St\"uckzahl von einigen tausend Teilen erreicht. Ma{\ss}geblich f\"ur die Kosten der Werkzeugh\"ullen sind unter anderem die Anzahl der Dom- und Rippenstrukturen des Bauteils. 
+Spritzgie{\ss}en ist allerdings ein aufwendiger Fertigungsprozess, der nur bei hohen St\"uckzahlen wirtschaftlich ist. Hierbei machen die Kosten der Werkzeugh\"ullen ein gro{\ss}en Teil der Aufw\"ande aus. So ist die Rentabilit\"at von spritzgu{\ss}gefertigen Bauteilen erst bei einer St\"uckzahl von einigen tausend Teilen erreicht. Ma{\ss}geblich f\"ur die Kosten der Werkzeugh\"ullen sind unter anderem die Anzahl der Dom- und Rippenstrukturen des Bauteils. 
 
-\subsection{Das Projekt GoCart}
-\label{goCart}
+\begin{figure}[tbp]
+\centerline{
+	\includegraphics[width=0.8\columnwidth]{graphics/domTeil1.png}
+}
+\caption{Bauteil mit Rippen und Domen.}
+\label{triangulation}
+\end{figure}
 
-Der praktische Teil der Masterarbeit wurd im Auftrag der Firma Teraport GmbH erstellt. Dieses Unternehmen besch\"aftigt sich mit der Entwicklung einer Reihe von modularen Softwarebausteinen (dem DMU-Toolkit), mit denen sich computergeometische Untersuchungen an triangulierten Fahrzeugdaten durchf\"uhren lassen. Dies sind zum Beispiel die Berechnung von Montagepfaden oder die \"Uberpr\"ufung von umfangreichen Geometrien auf Kollisionen. Die Werkzeuge der Teraport GmbH beinhalten auch die Visualisierungsanwendung, in die Komponenten
-
-%Fertigungsgerechtes Konstruieren
-%Spritzguss
-%Kostentreiber bei Spritzguss
-
-\subsubsection{Dome}
+\subsection{Dome}
 \label{dome}
-
 
 \subsubsection{H\"andisches Ausmessen von Domstrukturen}
 \label{domeMeasure}
@@ -54,7 +57,17 @@ Der Benutzer kann dann mit Hilfe eines Transformationsmanipulators die Höhe und
 %Beschreibung Dom
 %Bild Dom
 
-\subsubsection{Rippen}
+\begin{figure}[ht]
+    \centering 
+    \subfigure[einfacher Dom]{\includegraphics[width=0.24\textwidth]{graphics/dom1.png}} 
+		\subfigure[einfacher Dom]{\includegraphics[width=0.24\textwidth]{graphics/dom2.png}} 
+		\subfigure[einfacher Dom]{\includegraphics[width=0.24\textwidth]{graphics/dom3.png}} 
+		\subfigure[einfacher Dom]{\includegraphics[width=0.24\textwidth]{graphics/dom4.png}} 
+\caption{H\"andisches Ausmessen einer Domstruktur.} 
+\label{im:domes}
+\end{figure} 
+
+\subsection{Rippen}
 Verst\"arkungsrippen sind ein wirksames Hilfsmittel, um die Steifigkeit und Festigkeit von Spritzgu{\ss}teilen zu erhöhen.
 Der richtige Einsatz von Rippen kann Material und Gewicht einsparen, die Spritzzyklen verkürzen und dicke Querschnittbereiche vermeiden helfen, die beim Spritzgie{\ss}en zu Problemen führen könnten. Wenn Einfallstellen auf der einer Rippe
 gegen\"uberliegenden Seite nicht akzeptabel sind, k\"onnen sie durch strukturierte Oberflächen oder andere geeignete Unterbrechungen im Bereich der Einfallstelle kaschiert werden.
@@ -69,17 +82,21 @@ gegen\"uberliegenden Seite nicht akzeptabel sind, k\"onnen sie durch strukturier
 
 
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=10cm]{graphics/planefit.jpg}
-\caption{H\"andische Erzeugung eines parametrischen Zylinders.}
-\label{fig2}
-\end{figure}
 
 
 
 \subsubsection{H\"andisches Ausmessen von Rippenstrukturen}
 \label{ribMeasure}
+
+\begin{figure}[ht]
+    \centering 
+    \subfigure[einfacher Dom]{\includegraphics[width=0.24\textwidth]{graphics/rippen1.png}} 
+		\subfigure[einfacher Dom]{\includegraphics[width=0.24\textwidth]{graphics/rippen2.png}} 
+		\subfigure[einfacher Dom]{\includegraphics[width=0.24\textwidth]{graphics/rippen3.png}} 
+		\subfigure[einfacher Dom]{\includegraphics[width=0.24\textwidth]{graphics/rippen4.png}} 
+\caption{H\"andisches Ausmessen einer Rippenstruktur.} 
+\label{im:domes}
+\end{figure} 
 
 %Rippenmessen
 
