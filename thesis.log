@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.7.23)  9 JAN 2014 22:25
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.7.23)  12 JAN 2014 20:29
 entering extended mode
  %&-line parsing enabled.
 **thesis.tex
@@ -1138,9 +1138,6 @@ Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
 
 LaTeX Warning: Label `im:domes' multiply defined.
 
-
-LaTeX Warning: Label `triangulation' multiply defined.
-
 ) (./chapters/PSODomes.aux
 
 LaTeX Warning: Label `im:domes' multiply defined.
@@ -1208,7 +1205,7 @@ LaTeX Info: Redefining \pageref on input line 19.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <20.74> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 27.
 
-<styles/informat.png, id=148, 355.3275pt x 355.3275pt>
+<styles/informat.png, id=152, 355.3275pt x 355.3275pt>
 File: styles/informat.png Graphic file (type png)
 
 <use styles/informat.png>) [1
@@ -1286,21 +1283,21 @@ Class scrbook Info: You've told me to use the font selection of the element
 (scrbook)           `sectioning' that is an alias of element `disposition'
 (scrbook)            on input line 5.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10.95> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 7.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 9.
 Class scrbook Info: You've told me to use the font selection of the element
 (scrbook)           `sectioning' that is an alias of element `disposition'
-(scrbook)            on input line 19.
+(scrbook)            on input line 20.
 Class scrbook Info: You've told me to use the font selection of the element
 (scrbook)           `sectioning' that is an alias of element `disposition'
-(scrbook)            on input line 29.
+(scrbook)            on input line 30.
 Class scrbook Info: You've told me to use the font selection of the element
 (scrbook)           `sectioning' that is an alias of element `disposition'
-(scrbook)            on input line 35.
+(scrbook)            on input line 36.
 
 [9]
 Class scrbook Info: You've told me to use the font selection of the element
 (scrbook)           `sectioning' that is an alias of element `disposition'
-(scrbook)            on input line 40.
+(scrbook)            on input line 41.
 )
 \tf@toc=\write6
 \openout6 = `thesis.toc'.
@@ -1358,94 +1355,131 @@ LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
 
 
 ]
-LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <14.4> not available
-(Font)              Font shape `T1/phv/b/it' tried instead on input line 20.
-LaTeX Font Info:    Font shape `T1/phv/b/it' in size <14.4> not available
-(Font)              Font shape `T1/phv/b/sl' tried instead on input line 20.
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 27.
- <graphics/domTeil1.png, id=300, 555.07375pt x 310.15875pt>
-File: graphics/domTeil1.png Graphic file (type png)
-
-<use graphics/domTeil1.png> [2]
-<graphics/dom1.png, id=308, 351.3125pt x 311.1625pt>
-File: graphics/dom1.png Graphic file (type png)
- <use graphics/dom1.png>
-<graphics/dom2.png, id=309, 351.3125pt x 311.1625pt>
-File: graphics/dom2.png Graphic file (type png)
- <use graphics/dom2.png>
-<graphics/dom3.png, id=310, 351.3125pt x 311.1625pt>
-File: graphics/dom3.png Graphic file (type png)
- <use graphics/dom3.png>
-<graphics/dom4.png, id=311, 351.3125pt x 311.1625pt>
-File: graphics/dom4.png Graphic file (type png)
- <use graphics/dom4.png>
-Underfull \vbox (badness 2573) has occurred while \output is active []
-
- [3 <./graphics/domTeil1.png>] <graphics/rippen1.png, id=319, 361.35pt x 311.16
-25pt>
-File: graphics/rippen1.png Graphic file (type png)
-
-<use graphics/rippen1.png>
-<graphics/rippen2.png, id=320, 361.35pt x 311.1625pt>
-File: graphics/rippen2.png Graphic file (type png)
-
-<use graphics/rippen2.png>
-<graphics/rippen3.png, id=321, 361.35pt x 311.1625pt>
-File: graphics/rippen3.png Graphic file (type png)
-
-<use graphics/rippen3.png>
-<graphics/rippen4.png, id=322, 361.35pt x 311.1625pt>
-File: graphics/rippen4.png Graphic file (type png)
-
-<use graphics/rippen4.png> [4 <./graphics/dom1.png> <./graphics/dom2.png> <./gr
-aphics/dom3.png> <./graphics/dom4.png> <./graphics/rippen1.png> <./graphics/rip
-pen2.png> <./graphics/rippen3.png> <./graphics/rippen4.png>]
-<graphics/box.png, id=348, 597.23125pt x 188.705pt>
-File: graphics/box.png Graphic file (type png)
- <use graphics/box.png>
-[5 <./graphics/box.png>]
-<graphics/tvertices.jpg, id=355, 225.84375pt x 225.84375pt>
-File: graphics/tvertices.jpg Graphic file (type jpg)
-
-<use graphics/tvertices.jpg>
-LaTeX Font Info:    Try loading font information for OMS+phv on input line 154.
-
-
-(/usr/share/texmf-texlive/tex/latex/psnfss/omsphv.fd
+LaTeX Font Info:    Try loading font information for OMS+phv on input line 33.
+ (/usr/share/texmf-texlive/tex/latex/psnfss/omsphv.fd
 File: omsphv.fd 
 )
 LaTeX Font Info:    Font shape `OMS/phv/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 154.
- [6 <./graphics/tvertices.jpg>]
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 33.
+ [2]
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 45.
+LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <12> not available
+(Font)              Font shape `T1/phv/b/it' tried instead on input line 45.
+LaTeX Font Info:    Font shape `T1/phv/b/it' in size <12> not available
+(Font)              Font shape `T1/phv/b/sl' tried instead on input line 45.
+
+<graphics/goCart.png, id=314, 1044.90375pt x 804.00375pt>
+File: graphics/goCart.png Graphic file (type png)
+
+<use graphics/goCart.png> [3 <./graphics/goCart.png>]
+Overfull \hbox (31.60658pt too wide) in paragraph at lines 58--59
+[]\T1/phv/m/n/10.95 Die Werk-zeu-ge der Te-ra-port GmbH bein-hal-ten auch die V
+i-sua-li-sie-rungs-an-wen-dung \T1/phv/m/sl/10.95 DMU.View\T1/phv/m/n/10.95 ,
+ []
+
+
+Overfull \hbox (10.21098pt too wide) in paragraph at lines 60--61
+\T1/phv/m/n/10.95 Kal-ku-la-ti-on der Bau-teil-kos-ten wer-den mit ei-ner wei-t
+e-ren An-wen-dung, der \T1/phv/m/sl/10.95 Schmale-Werkzeug
+ []
+
+
+Overfull \hbox (26.1323pt too wide) in paragraph at lines 60--61
+\T1/phv/m/n/10.95 schen Be-nut-ze-ro-ber-flä-che vom Be-nut-zer hän-disch ein-g
+e-ge-ben oder über ei-ne XML-Schnittstelle
+ []
+
+<graphics/dom1.png, id=324, 351.3125pt x 311.1625pt>
+File: graphics/dom1.png Graphic file (type png)
+ <use graphics/dom1.png>
+<graphics/dom2.png, id=325, 351.3125pt x 311.1625pt>
+File: graphics/dom2.png Graphic file (type png)
+ <use graphics/dom2.png>
+<graphics/dom3.png, id=326, 351.3125pt x 311.1625pt>
+File: graphics/dom3.png Graphic file (type png)
+ <use graphics/dom3.png>
+<graphics/dom4.png, id=327, 351.3125pt x 311.1625pt>
+File: graphics/dom4.png Graphic file (type png)
+ <use graphics/dom4.png>
+File: graphics/dom1.png Graphic file (type png)
+
+<use graphics/dom1.png>
+File: graphics/dom2.png Graphic file (type png)
+ <use graphics/dom2.png>
+File: graphics/dom3.png Graphic file (type png)
+ <use graphics/dom3.png>
+File: graphics/dom4.png Graphic file (type png)
+
+<use graphics/dom4.png> [4]
+File: graphics/dom1.png Graphic file (type png)
+ <use graphics/dom1.png>
+File: graphics/dom2.png Graphic file (type png)
+ <use graphics/dom2.png>
+File: graphics/dom3.png Graphic file (type png)
+
+<use graphics/dom3.png>
+File: graphics/dom4.png Graphic file (type png)
+ <use graphics/dom4.png>
+Underfull \vbox (badness 1616) has occurred while \output is active []
+
+ [5 <./graphics/dom1.png> <./graphics/dom2.png> <./graphics/dom3.png> <./graphi
+cs/dom4.png>] <graphics/rippen1.png, id=355, 361.35pt x 311.1625pt>
+File: graphics/rippen1.png Graphic file (type png)
+
+<use graphics/rippen1.png>
+<graphics/rippen2.png, id=356, 361.35pt x 311.1625pt>
+File: graphics/rippen2.png Graphic file (type png)
+
+<use graphics/rippen2.png>
+<graphics/rippen3.png, id=357, 361.35pt x 311.1625pt>
+File: graphics/rippen3.png Graphic file (type png)
+
+<use graphics/rippen3.png>
+<graphics/rippen4.png, id=358, 361.35pt x 311.1625pt>
+File: graphics/rippen4.png Graphic file (type png)
+
+<use graphics/rippen4.png>
+Underfull \vbox (badness 2894) has occurred while \output is active []
+
+ [6 <./graphics/rippen1.png> <./graphics/rippen2.png> <./graphics/rippen3.png> 
+<./graphics/rippen4.png>] <graphics/box.png, id=377, 597.23125pt x 188.705pt>
 File: graphics/box.png Graphic file (type png)
- <use graphics/box.png> [7]
-<graphics/bvh.png, id=378, 567.11874pt x 217.81375pt>
+
+<use graphics/box.png> [7 <./graphics/box.png>]
+<graphics/tvertices.jpg, id=384, 225.84375pt x 225.84375pt>
+File: graphics/tvertices.jpg Graphic file (type jpg)
+
+<use graphics/tvertices.jpg> [8 <./graphics/tvertices.jpg>]
+File: graphics/box.png Graphic file (type png)
+
+<use graphics/box.png> [9]
+<graphics/bvh.png, id=406, 567.11874pt x 217.81375pt>
 File: graphics/bvh.png Graphic file (type png)
  <use graphics/bvh.png>
-<graphics/BV-Hierarchie5.png, id=380, 250.9375pt x 246.9225pt>
+<graphics/BV-Hierarchie5.png, id=408, 250.9375pt x 246.9225pt>
 File: graphics/BV-Hierarchie5.png Graphic file (type png)
 
 <use graphics/BV-Hierarchie5.png>
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [8 <./graphics/bvh.png (PNG copy)>]
-<graphics/raypicking.png, id=387, 319.9152pt x 198.9834pt>
+ [10 <./graphics/bvh.png (PNG copy)>]
+<graphics/raypicking.png, id=416, 319.9152pt x 198.9834pt>
 File: graphics/raypicking.png Graphic file (type png)
 
-<use graphics/raypicking.png> [9 <./graphics/BV-Hierarchie5.png> <./graphics/ra
-ypicking.png>]) [10]
+<use graphics/raypicking.png> [11 <./graphics/BV-Hierarchie5.png> <./graphics/r
+aypicking.png>]) [12]
 \openout2 = `chapters/PSODomes.aux'.
 
  (./chapters/PSODomes.tex
 Kapitel 2.
 
-LaTeX Warning: Reference `implPSO' on page 11 undefined on input line 18.
+LaTeX Warning: Reference `implPSO' on page 13 undefined on input line 18.
 
 
 Underfull \vbox (badness 4819) has occurred while \output is active []
 
- [11
+ [13
 
 
 
@@ -1460,10 +1494,10 @@ LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <10.95> not available
 (Font)              Font shape `T1/phv/b/it' tried instead on input line 31.
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <10.95> not available
 (Font)              Font shape `T1/phv/b/sl' tried instead on input line 31.
-<graphics/SimAnn.jpg, id=414, 329.73187pt x 219.06844pt>
+<graphics/SimAnn.jpg, id=446, 329.73187pt x 219.06844pt>
 File: graphics/SimAnn.jpg Graphic file (type jpg)
 
-<use graphics/SimAnn.jpg> [12] [13 <./graphics/SimAnn.jpg>]
+<use graphics/SimAnn.jpg> [14] [15 <./graphics/SimAnn.jpg>]
 Package hyperref Info: bookmark level for unknown algocf defaults to 0 on input
  line 88.
 
@@ -1484,8 +1518,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 70--91
 
 Underfull \vbox (badness 1038) has occurred while \output is active []
 
- [14]
-<graphics/planefit.jpg, id=446, 562.1pt x 421.575pt>
+ [16]
+<graphics/planefit.jpg, id=479, 562.1pt x 421.575pt>
 File: graphics/planefit.jpg Graphic file (type jpg)
 
 <use graphics/planefit.jpg>
@@ -1498,7 +1532,7 @@ you forgot something else, as in `\hbox{$x}'. In such cases
 the way to recover is to insert both the forgotten and the
 deleted material, e.g., by typing `I$}'.
 
-[15 <./graphics/planefit.jpg>]
+[17 <./graphics/planefit.jpg>]
 ! Extra }, or forgotten $.
 l.131 ...} a(p_{i})\vv{p}_{i}}{\sum_{i} a(p_{i})}}
                                                   
@@ -1509,12 +1543,12 @@ the way to recover is to insert both the forgotten and the
 deleted material, e.g., by typing `I$}'.
 
 File: graphics/planefit.jpg Graphic file (type jpg)
-<use graphics/planefit.jpg> [16]
-<graphics/domLamda1.png, id=460, 276.03125pt x 283.0575pt>
+<use graphics/planefit.jpg> [18]
+<graphics/domLamda1.png, id=492, 276.03125pt x 283.0575pt>
 File: graphics/domLamda1.png Graphic file (type png)
 
 <use graphics/domLamda1.png>
-<graphics/domLamda2.png, id=461, 276.03125pt x 283.0575pt>
+<graphics/domLamda2.png, id=493, 276.03125pt x 283.0575pt>
 File: graphics/domLamda2.png Graphic file (type png)
 
 <use graphics/domLamda2.png>
@@ -1532,8 +1566,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 174--190
 
  []
 
-[17 <./graphics/domLamda1.png> <./graphics/domLamda2.png>]
-<graphics/dummy.jpg, id=477, 250.9375pt x 250.9375pt>
+[19 <./graphics/domLamda1.png> <./graphics/domLamda2.png>]
+<graphics/dummy.jpg, id=509, 250.9375pt x 250.9375pt>
 File: graphics/dummy.jpg Graphic file (type jpg)
  <use graphics/dummy.jpg>
 File: graphics/dummy.jpg Graphic file (type jpg)
@@ -1554,28 +1588,28 @@ Underfull \hbox (badness 5091) in paragraph at lines 206--206
 File: graphics/dummy.jpg Graphic file (type jpg)
 <use graphics/dummy.jpg>
 File: graphics/dummy.jpg Graphic file (type jpg)
- <use graphics/dummy.jpg> [18 <./graphics/dummy.jpg>])
-[19]
+ <use graphics/dummy.jpg> [20 <./graphics/dummy.jpg>])
+[21]
 \openout2 = `chapters/SegRips.aux'.
 
- (./chapters/SegRips.tex [20
+ (./chapters/SegRips.tex [22
 
 
 
 
 ]
 Kapitel 3.
-) [21]
+) [23]
 \openout2 = `chapters/SegRipsTool.aux'.
 
- (./chapters/SegRipsTool.tex [22
+ (./chapters/SegRipsTool.tex [24
 
 
 
 
 ]
 Kapitel 4.
-) [23] [24
+) [25] [26
 
 
 
@@ -1599,7 +1633,7 @@ Package glossaries Info: Writing glossary file thesis.glo on input line 45.
 Package glossaries Warning: No \printglossary or \printglossaries found.
 This document will not have a glossary.
 
-[25
+[27
 
 
 \openout3 = `thesis.xdy'.
@@ -1614,13 +1648,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 20848 strings out of 495021
- 349543 string characters out of 1181035
- 483527 words of memory out of 3000000
- 23318 multiletter control sequences out of 15000+50000
+ 20866 strings out of 495021
+ 349836 string characters out of 1181035
+ 483688 words of memory out of 3000000
+ 23322 multiletter control sequences out of 15000+50000
  64629 words of font info for 92 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 64i,17n,55p,1393b,373s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 64i,17n,55p,1393b,376s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-texli
 ve/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-texlive/fonts/ty
 pe1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/
@@ -1634,9 +1668,9 @@ rier/ucrr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvb8a.pfb><
 -texlive/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-texlive/fonts/ty
 pe1/urw/helvetic/uhvro8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/palatino
 /uplr8a.pfb></usr/share/texmf-texlive/fonts/type1/public/esvect/vect10.pfb>
-Output written on thesis.pdf (41 pages, 673569 bytes).
+Output written on thesis.pdf (43 pages, 749291 bytes).
 PDF statistics:
- 602 PDF objects out of 1000 (max. 8388607)
- 135 named destinations out of 1000 (max. 500000)
- 401 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 638 PDF objects out of 1000 (max. 8388607)
+ 149 named destinations out of 1000 (max. 500000)
+ 409 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -13,36 +13,72 @@ mit denen sich ein Automobilhersteller 2013 konfrontiert sieht. Dar\"uber hinaus
 
 Um diese Situation zu verbessern, geben die Automobilhersteller den Kostendruck an ihre Zulieferer weiter. So wirkt sich der Qualit\"ats - und Kostendruck und damit die Notwendigkeit, ein Bauteil schon w\"ahrend der Konstruktion fertigungsgerecht und somit kosteneffizient zu gestalten, direkt auf die Automobilzulieferer aus. Hieraus entsteht bei diesen Firmen die Nachfrage nach softwaretechnischen Werkzeugen, mit denen sich die Fertigungskosten eines Bauteils einfacher absch\"atzen lassen. 
 
+\section{Problemstellung}
+
 In der Automobilindustrie wird die Konstruktion s\"amtlicher Bauteile eines Fahrzeugs und ihr Zusammenbau zu Baugruppen mit Hilfe von Computer Aided Design-Systemen (CAD) realisiert. Dies hat unter anderem den Vorteil, das wichtige Untersuchungen bereits in einem fr\"uhen Stadium der Produktentwicklung durchgef\"uhrt werden k\"onnen. Das k\"onnen beispielsweise dynamische Simulationen des Fahrzeugverhaltens oder eben Kostenanalysen f\"ur Bauteile sein.
 
 Zur Kostenanalyse von CAD-Bauteilen ist es notwendig, eine Reihe von Eigenschaften, die mit dem Fertigungsverfahren variieren, zu erfassen. Mit Fertigungsverfahren oder Fertigungsart sind eine Reihe von hintereinander ausgef\"uhrten Prozessen gemeint, mit denen ein Produkt aus anderen G\"utern produziert wird. Beispielsweise wird beim Spritzgie{\ss}en erhitzter Kunststoff in einen Hohlraum (Formwerkzeug) gespritzt, in welchem er erst verdichtet wird und dann erkaltet. Bei mit Spritzguss gefertigten Bauteilen sind Eigenschaften, die die Fertigungskostem ma{\ss}geblich erh\"ohen (sogenannte Kostentreiber) zum Beispiel die minimale und maximale Dicke des K\"orpers oder die Anzahl der sogenannten Hinterschnitte. Die Erfassung dieser Eigenschaften sind f\"ur den Benutzer teilweise sehr aufwendig, so das eine softwaretechnische Unterst\"utzung w\"unschenswert ist. Im Rahmen dieser Arbeit sollen Werkzeuge entwickelt werden, wie bestimmte kostentreibende geometrische Strukturen, sogenannte Rippen und Dome, innerhalb von spritzgego{\ss}enen Bauteilen einfacher ermittelt werden k\"onnen. Im folgenden Abschnitt \ref{injection} wird kurz auf die das Spritzgu{\ss} Fertigungsverfahren eingegangenen und die Anwendung \textit{GoCart} vorgestellt, in die die im Rahmen dieser Arbeit entwickelten Werkzeuge integriert wurden.
-
-\section{Das Projekt \textit{GoCart}}
-\label{goCart}
-
-Der praktische Teil der Masterarbeit wurde im Auftrag der Firma Teraport GmbH erstellt. Dieses Unternehmen besch\"aftigt sich mit der Entwicklung einer Reihe von modularen Softwarebausteinen (dem \textit{DMU-Toolkit}), mit denen sich computergeometische Untersuchungen an triangulierten Fahrzeugdaten durchf\"uhren lassen. Dies sind zum Beispiel die Berechnung von Montagepfaden oder die \"Uberpr\"ufung von umfangreichen Geometrien auf Kollisionen. Die Werkzeuge der Teraport GmbH beinhalten auch eine Visualisierungskomponente, die Anwendung \textit{DMU.View}, in die einzelne Module des \textit{DMU-Toolkit} integriert werden k\"onnen. Die Anwendung verf\"ugt \"uber Komponenten zum Laden und Visualisieren von Fahrzeugteilen.  
-
-Dar\"uber hinaus sind Teile des Erscheinungsbildes und der Funktionsumfang der Anwendung anpassbar, so das sie als Basis f\"ur Kundenprojekte dienen kann, in denen eine grafische Benutzeroberfl\"ache mit 3D-Visualisierung ben\"otigt wird. Ein solches Kundenprojekt ist die Entwicklung der Anwendung \textit{GoCart}, die im Auftrag der Volkswagen AG durchgeführt wird.
-
-\subsection{Kostenabsch\"atzung f\"ur spritzgussgefertigte Bauteile}
+ 
+\section{Kostenabsch\"atzung f\"ur spritzgussgefertigte Bauteile}
 \label{injection}
 
-Das Spritzgie{\ss}en (oft umgangssprachlich auch als Spritzguss oder Spritzgussverfahren bezeichnet) ist ein sogenanntes Urformverfahren, das haupts\"achlich in der Kunststoffverarbeitung, aber auch beispielsweise beim Pulverspritzgie{\ss}en in der Metallverarbeitung eingesetzt wird.
+Das Spritzgie{\ss}en (oft umgangssprachlich auch als Spritzguss oder Spritzgussverfahren bezeichnet) ist ein sogenanntes Urformverfahren. Urformen ist ein Oberbegriff f\"ur Fertigungsverfahren, bei denen aus einem formlosen Stoff ein geometrischer bestimmter fester K\"orper hergestellt und der Stoffzusammenhang erzeugt wird. Es werden unter anderem Ausgangstoffe in fl\"ussigem, plastischem oder pulverförmigen Zustand genutzt. Spritzgie{\ss}en wird haupts\"achlich in der Kunststoffverarbeitung, aber auch beim Pulverspritzgie{\ss}en in der Metallverarbeitung eingesetzt.
 
-Mit Hilfe dieses Verfahrens lassen sich direkt nutzbare Teile in gro{\ss}er St\"uckzahl herstellen. Dazu wir der jeweilige verfl\"ussigte  Werkstoff in Pulverform in eine Werkzeugform eingespritzt. Diese Werkzeugform definiert die Form und die Oberfl\"achenstruktur des zu fertigen Bauteils. Mit dem Spritzgu{\ss}verfahren lassen sich Bauteile mit sehr geringen Toleranzen, also sehr hoher Fertigungsgenauigkeit, in gro{\ss}en Mengen wirtschaftlich produzieren. 
+Mit Hilfe des Verfahrens lassen sich direkt nutzbare Teile in gro{\ss}er St\"uckzahl herstellen. Dazu wir der jeweilige verfl\"ussigte  Werkstoff in eine Werkzeugform unter Druck eingespritzt. Im Werkzeug k\"uhlt der Werksstoff aus und geht wieder in eine feste Form \"uber, so das er nach dem \"Offenen der Form entnommen werden kann. Diese Werkzeugform definiert die Form und die Oberfl\"achenstruktur des zu fertigenden Bauteils. Mit dem Spritzgu{\ss}verfahren lassen sich Bauteile mit sehr geringen Toleranzen, also sehr hoher Fertigungsgenauigkeit, in gro{\ss}en Mengen wirtschaftlich produzieren. 
 
-Spritzgie{\ss}en ist allerdings ein aufwendiger Fertigungsprozess, der nur bei hohen St\"uckzahlen wirtschaftlich ist. Hierbei machen die Kosten der Werkzeugh\"ullen ein gro{\ss}en Teil der Aufw\"ande aus. So ist die Rentabilit\"at von spritzgu{\ss}gefertigen Bauteilen erst bei einer St\"uckzahl von einigen tausend Teilen erreicht. Ma{\ss}geblich f\"ur die Kosten der Werkzeugh\"ullen sind unter anderem die Anzahl der Dom- und Rippenstrukturen des Bauteils. 
+Spritzgie{\ss}en ist allerdings ein aufwendiger Fertigungsprozess, der nur bei hohen St\"uckzahlen wirtschaftlich ist. Hierbei machen die Kosten der Werkzeugh\"ullen ein gro{\ss}en Teil der Aufw\"ande aus. So ist die Rentabilit\"at von spritzgu{\ss}gefertigen Bauteilen sogar bei einfachen Werkzeugen erst bei einer St\"uckzahl von einigen tausend Teilen erreicht. 
+Ma{\ss}geblich f\"ur die Kosten der Werkzeugh\"ullen ist die Komplexit\"at der Bauteilgeometrie. Hierbei sind folgende Eigenschaften besondere Kostentreiber: 
 
-\begin{figure}[tbp]
+\begin{itemize}
+\item Die \textit{Abma{\ss}e des Bauteils}. Die Abma{\ss}e des Bauteils, also die minimale und maximale Dicke, die L\"ange und Breite bestimmen die Gr\"osse des ben\"otigten Werkzeugs und sind damit ausschlaggebend f\"ur die Kosten.
+
+\item Anzahl der \textit{Hinterschnitte} oder \textit{Hinterschneidungen}. Ein Hinterschnitt ist ein Konstruktionselement, das frei am Gussteil hervorsteht und so verhindern kann, dass sich dieses aus seiner Gussform entfernen lässt. Meistens wird dies durch Einlegen von kleinen Teilen, sogenannten Losteilen, erreicht, die den Bereich für den Gu{\ss} versperren. Hinterschneidungen stellen ein technisches Problem da, das die Fertigungskosten von Sppritzgussteilen stark erh\"oht. Ein Beispiel f\"ur Hinterschnitte sind Kunststoffhaken, die verwendet werden um das Werkst\"uck an einem anderen Gegenstück einzurasten. 
+
+\item \textit{Dome}. Ein Dom ist eine zylindrische Struktur, die als Verbindungselemente zu anderen Bauteilen dienen. Hierbei wird der sogenannte F\"ugepartner auf den Dom aufgesteckt. Sie werden im Abschnitt \ref{dome} n\"aher beschrieben.
+
+\item \textit{Rippen}. Verst\"arkungsrippen sind quarderf\"ormige Strukturen, die die Steifigkeit und Festigkeit von Spritzgu{\ss}teilen erhöhen. Auf sie wird im Abschnitt \ref{rips} n\"aher eingegangen.
+
+\end{itemize}
+
+Die Anwendung \textit{GoCart} ist ein grafischer Editor mit 3D-Visualisierungskomponente, mit der bestimmte geometrische Eigenschaften von spritzgu{\ss}gefertigen Bauteilen erfasst werden k\"onnen.
+
+\subsection{Das Projekt \textit{GoCart}}
+\label{goCart}
+
+\begin{figure}[H]
 \centerline{
-	\includegraphics[width=0.8\columnwidth]{graphics/domTeil1.png}
+	\includegraphics[width=0.95\columnwidth]{graphics/goCart.png}
 }
-\caption{Bauteil mit Rippen und Domen.}
-\label{triangulation}
+\caption{Oberfl\"ache \textit{GoCart}.}
+\label{im:goCart}
 \end{figure}
+
+Der praktische Teil der Masterarbeit wurde im Auftrag der Firma Teraport GmbH erstellt. Dieses Unternehmen besch\"aftigt sich mit der Entwicklung einer Reihe von modularen Softwarebausteinen (dem \textit{DMU-Toolkit}), mit denen sich computergeometische Untersuchungen an triangulierten Fahrzeugdaten durchf\"uhren lassen. Dies sind zum Beispiel die Berechnung von Montagepfaden oder die \"Uberpr\"ufung von umfangreichen Geometrien auf Kollisionen. 
+
+Die Werkzeuge der Teraport GmbH beinhalten auch die Visualisierungsanwendung \textit{DMU.View}, in die einzelne Komponenten des \textit{DMU.Toolkits} integriert werden k\"onnen. Die Anwendung ist bez\"uglich des Funktionsumfangs und des Erscheinungsbild, also beispielsweise des Anwendungsnamens, anpassbar, so das sie gut als Plattform f\"ur individuelle Kundenprojekte eingesetzt werden kann. Ein solches Kundeprojekt ist die Entwicklung der Anwendung \textit{GoCart} f\"ur die VW AG (siehe Abbildung \ref{im:goCart}). Dieses Programm soll das komfortable Erfassen kostenrelevanter Eigenschaften von Spritzgussteilen erm\"oglichen.  
+
+\textit{GoCart} besitzt keine Funktion zur Kalkulation der Kosten eines spritzgu{\ss}gefertigten Bauteils, sondern erfasst ausschlie{\ss}lich hierf\"ur relevante Eigenschaften. Die eigentliche Kalkulation der Bauteilkosten werden mit einer weiteren Anwendung, der \textit{Schmale-Werkzeug kostenkalkulation} der Schmale Werkzeug- und Formtechnik GmbH, durchgef\"uhrt. Mit diesem Programm k\"onnen die relevanten Bauteilinformationen entweder mittels einer grafischen Benutzeroberfl\"ache vom Benutzer h\"andisch eingegeben oder über eine XML-Schnittstelle importiert werden. \textit{GoCart} erzeugt so eine von der \textit{Schmale-Werkzeugkostenkalkulation} lesbare XML-Datei.
+
+Die Anwendung besitzt Funktionalität zum Laden und Visualisieren von triangulierten CAD-Geometrien in üblichen Formaten wie Beispielsweise VRML oder STL, kann aber auch Geometrien, die aus properit\"aren CAD-Systemen wie Catia oder ProE exportiert wurden, lesen. Dar\"uber hinaus wurde Funktionalit\"at zum einfachen Erfassen der von der \textit{Schmale-Werkzeugkostenkalkulation} zur Kostenabsch\"atzung erforderlichen Informationen implementiert. Hiervon sind f\"ur diese Masterarbeit vor allem die Werkzeuge zur Erfassung von Dom- und Rippenstukturen interessant, die in den beiden folgenden Unterkapiteln n\"aher beschrieben werden.
 
 \subsection{Dome}
 \label{dome}
+
+Ein Dom ist eine zylindrische Struktur, die als Verbindungselement f\"ur andere Bauteile dient. In der Abbildung \ref{im:domes1} zeigt eine Reihe verschiedener Domkonstruktionen.
+
+\begin{figure}[ht]
+    \centering 
+    \subfigure[einfacher Dom]{\includegraphics[width=0.23\textwidth]{graphics/dom1.png}} 
+    \subfigure[einfacher Dom]{\includegraphics[width=0.23\textwidth]{graphics/dom2.png}} 
+    \subfigure[einfacher Dom]{\includegraphics[width=0.23\textwidth]{graphics/dom3.png}} 
+    \subfigure[einfacher Dom]{\includegraphics[width=0.23\textwidth]{graphics/dom4.png}} 
+    \subfigure[einfacher Dom]{\includegraphics[width=0.23\textwidth]{graphics/dom1.png}} 
+    \subfigure[einfacher Dom]{\includegraphics[width=0.23\textwidth]{graphics/dom2.png}} 
+    \subfigure[einfacher Dom]{\includegraphics[width=0.23\textwidth]{graphics/dom3.png}} 
+    \subfigure[einfacher Dom]{\includegraphics[width=0.23\textwidth]{graphics/dom4.png}} 
+\caption{H\"andisches Ausmessen einer Domstruktur.} 
+\label{im:domes1}
+\end{figure} 
 
 \subsubsection{H\"andisches Ausmessen von Domstrukturen}
 \label{domeMeasure}
@@ -51,7 +87,6 @@ Das h\"andische Messverfahren zur Platzierung eines parametrischen Zylinders erf
 
 Diese Kugeln m\"ussen vom Benutzer kreisf\"ormig auf der Zylinderkappe angeordnet werden. Durch Rechtsklick kann dann ein interaktiver parametrischer Messzylinder, mit dem H\"ohe und Radius manipuliert werden kann, erzeugt werden. Das Zylinderobjekt ist an der Normalen der sogenannten \textit{Best-Fitting Plane} ausgerichtet. Eine \textit{Best-Fitting Plane} f\"ur eine dreidimensionale Punktemenge ist diejenige Ebene, die den aufsummierten orthogonalen Abstand der Punkte zur Ebene minimiert. Sie wird sowohl f\"ur die halbautomatische Erkennung von Domstrukturen als auch f\"ur die Segmentierung der Bauteile, die in Abschnitt \ref{cha:segment} beschrieben wird, verwendet. Im Rahmen der Masterarbeit wurde das bestehende, auf Singulärwertzerlegung basierende Verfahren, durch Hauptkomponentenanalyse ersetzt. Es wird im Abschnitt \ref{subsec:pca} näher beschrieben.
 
-
 Der Zylinder kann so im Schwerpunkt der Punktwolke und an der Normalen der Best-Fitting Plane ausgerichtet erzeugt werden. Als voreingestellter Radius wird der Abstand des am weitesten zum Schwerpunkt entfernten Punktabstand genutzt.
 Der Benutzer kann dann mit Hilfe eines Transformationsmanipulators die Höhe und den Radius weiter anpassen.
 %Beschreibung Dom
@@ -59,15 +94,17 @@ Der Benutzer kann dann mit Hilfe eines Transformationsmanipulators die Höhe und
 
 \begin{figure}[ht]
     \centering 
-    \subfigure[einfacher Dom]{\includegraphics[width=0.24\textwidth]{graphics/dom1.png}} 
-		\subfigure[einfacher Dom]{\includegraphics[width=0.24\textwidth]{graphics/dom2.png}} 
-		\subfigure[einfacher Dom]{\includegraphics[width=0.24\textwidth]{graphics/dom3.png}} 
-		\subfigure[einfacher Dom]{\includegraphics[width=0.24\textwidth]{graphics/dom4.png}} 
+    \subfigure[einfacher Dom]{\includegraphics[width=0.22\textwidth]{graphics/dom1.png}} 
+		\subfigure[einfacher Dom]{\includegraphics[width=0.22\textwidth]{graphics/dom2.png}} 
+		\subfigure[einfacher Dom]{\includegraphics[width=0.22\textwidth]{graphics/dom3.png}} 
+		\subfigure[einfacher Dom]{\includegraphics[width=0.22\textwidth]{graphics/dom4.png}} 
 \caption{H\"andisches Ausmessen einer Domstruktur.} 
 \label{im:domes}
 \end{figure} 
 
 \subsection{Rippen}
+\label{rips}
+
 Verst\"arkungsrippen sind ein wirksames Hilfsmittel, um die Steifigkeit und Festigkeit von Spritzgu{\ss}teilen zu erhöhen.
 Der richtige Einsatz von Rippen kann Material und Gewicht einsparen, die Spritzzyklen verkürzen und dicke Querschnittbereiche vermeiden helfen, die beim Spritzgie{\ss}en zu Problemen führen könnten. Wenn Einfallstellen auf der einer Rippe
 gegen\"uberliegenden Seite nicht akzeptabel sind, k\"onnen sie durch strukturierte Oberflächen oder andere geeignete Unterbrechungen im Bereich der Einfallstelle kaschiert werden.
@@ -79,10 +116,6 @@ gegen\"uberliegenden Seite nicht akzeptabel sind, k\"onnen sie durch strukturier
 %Schmale
 %Bild GUI
 %Beschreibung Features
-
-
-
-
 
 
 \subsubsection{H\"andisches Ausmessen von Rippenstrukturen}
@@ -100,6 +133,15 @@ gegen\"uberliegenden Seite nicht akzeptabel sind, k\"onnen sie durch strukturier
 
 %Rippenmessen
 
+\section{Zielsetzung der Arbeit}
+\label{problem}
+
+Ziel dieser Masterarbeit ist die Entwicklung von interaktiven Werkzeugen und automatischen Methoden zur Erfassung von Dom- und Rippenstrukturen in triangulierten Bauteilen.
+
+Die entwickelten Verfahren wurden, zum Teil in ausgetesteter und produktreifer Form, in die Anwendung \textit{GoCart} integriert. Daher kann die Vorgehensweise und Nutzen der jeweiligen Methode anhand praktischer Beispiele erl\"autert werden. Es soll gezeigt werden, das diese Verfahren die im Abschnitt \ref{injection} vorgestellte h\"andische Vorgehensweise ma{\ss}geblich beschleunigen. Im Anschluss werden die Vor- und Nachteile der entwickelten Methoden gegenüber der bisherigen Vorgehensweise diskutiert.
+
+In den folgenden beiden Abschnitten werden zum einen grundlegende Methoden und Techniken aus der Computergrafik vorgestellt, die in der Arbeit h\"aufig verwendet werden und die zum Verst\"andniss des weiteren Texts von Bedeutung sind, und zum anderen wird der Aufbau der folgenden Kapitel vorgestellt.
+
 \section{Grundlagen der verwendeten computergrafischen Techniken}
 
 Dreidimensionale Objekte k\"onnen in einem Rechner nur visualisiert und verarbeitet werden, wenn ihre Struktur durch ein geeignetes Modell beschrieben wird. Ein einfaches solches Modell, auf denen die im GoCart-Projekt verarbeiteten Daten basieren, sind trinagulierte Geometrien. Sie werden im folgenden Abschnitt \ref{triGeo} n\"aher beschrieben.
@@ -113,6 +155,8 @@ In Abschnitt \ref{picking} werden kurz dreidimensionale Auswahlverfahren beschri
 
 Eine einfache M\"oglichkeit zur Repr\"sentation von geometrischen K\"orpern sind Dreiecksnetze, sogenannte Triangulierungen. Eine Triangulierung approximiert die Oberfl\"ache eines K\"orpers durch (sehr kleine) Dreieckefl\"achen. Ein Dreieck ist ein planares Polygon und wird durch drei sogenannte Scheitelpunkte, oder eng. Vertices, definiert. Jeder dieser Scheitelpunkte beschreibt mittels x-,y- und z-Koordinaten eine Position im dreidimensionalen Raum. Triangulierungen sind ein Spezialfall polygonaler Flächenrepräsentation geometrischer K\"orper, die Objekte mit Hilfe von planaren Vielecken (Polygone) beschreiben. Das Verfahren funktioniert exakt f\"ur ebene Strukturen, bei gekrümmten Oberfl\"achen entsteht jedoch ein sogenannter Tesslierungsfehler, der umso stärker ausf\"allt, je weniger Dreiecke für die gekr\"ummte Oberfl\"ache verwendet werden. In Abbildung \ref{triangulation} ist dieses Verhalten deutlich zu erkennen: Die Triangulierung mit der h\"oheren Dreiecksanzahl wirkt an der Silhouette wesentlich runder als die mit geringerer Anzahl. 
 
+Eine Triangulierung speichert neben den Punktdaten noch weitere Information f\"ur jedes Dreieck, wie beispielsweise Farbwerte oder sogenannte Normalenvektoren. Das sind Vektoren, die senkrecht auf der Netzoberfläche stehen und vom K\"orper  "`weg "` zeigen. Es wird zwischen Dreiecksnormalen und Punktnormalen unterschieden: Eine Dreiecksnormale ist der Vector, der orthogonal zur Dreicksfläche nach "`aussen"` zeigt. Die Punktnormale ist die Mittelung der  Dreiecksnormalen der drei Dreiecke, die an einen Scheitelpunkt angrenzen. Normalen haben in der Computergrafik verschiedenste Verwendungen, beispielsweise sind sie für essentiell f\"ur die Simulation von Oberfl\"achen in der Bildsynthese.
+
 \begin{figure}[H]
 \centerline{
 	\includegraphics[width=0.7\columnwidth]{graphics/box.png}
@@ -120,8 +164,6 @@ Eine einfache M\"oglichkeit zur Repr\"sentation von geometrischen K\"orpern sind
 \caption{Triangulierung eines Zylinders mit unterschiedlicher Dreiecksanzahl.}
 \label{triangulation}
 \end{figure}
-
-Eine Triangulierung speichert neben den Punktdaten noch weitere Information f\"ur jedes Dreieck, wie beispielsweise Farbwerte oder sogenannte Normalenvektoren. Das sind Vektoren, die senkrecht auf der Netzoberfläche stehen und vom K\"orper  "`weg "` zeigen. Es wird zwischen Dreiecksnormalen und Punktnormalen unterschieden: Eine Dreiecksnormale ist der Vector, der orthogonal zur Dreicksfläche nach "`aussen"` zeigt. Die Punktnormale ist die Mittelung der  Dreiecksnormalen der drei Dreiecke, die an einen Scheitelpunkt angrenzen. Normalen haben in der Computergrafik verschiedenste Verwendungen, beispielsweise sind sie für essentiell f\"ur die Simulation von Oberfl\"achen in der Bildsynthese.
 
 Eine Triangulierung kann gespeichert und maschinell verarbeitet werden, indem f\"ur jedes Dreieck die drei Scheitelpunkte explizit gespeichert werden. Dieses Verfahren ist allerdings \"ausserst unpraktisch, da zum einen Punkte mehrfach gespeichert werden und zum anderen keine M\"oglichkeit existiert, einfach benachbarte Dreiecke zu finden. Ein besseres Verfahren sind sogenannte indizierte Polygonmengen, eng. \textit{Indexed Face Set}. Hierbei werden alle Punkte in einer Liste gehalten. Ein einzelnes Dreieck kann dann durch drei Indizes in diese Liste beschrieben werden. Auf diese Weise ist zwar keine redundante Speicherung von Punktdaten mehr n\"otig, das Problem der fehlenden Nachbarschaftsbeziehungen besteht auch bei dieser Repr\"asentation. 
 
@@ -263,8 +305,27 @@ Dieses Verfahren wird als eng. \textit{Ray Casting} bezeichnet. Es hat den Vorte
 Um zu vermeiden, Schnittests zwischen jedem Dreieck der Szene
 und dem Teststrahl durchzuführen, werden bei der Selektion mittels Ray Casting die Objektgeometrien, \"ahnlich wie bei der Kollisonspr\"ufung, durch H\"ullk\"orper ersetzt.
 
-\section{Zielsetzung der Arbeit}
-\label{problem}
-
 \section{Aufbau der Arbeit}
+
+Nach dieser Einleitung sind die restlichen Kapitel wie folgt aufgebaut:
+
+\begin{itemize}
+\item  \textbf{Kapitel 2: Halbautomatische Erkennung von Domstrukturen}\\
+In diesem Kapitel wird die Funktionsweise eines halbautomatischen Werkzeugs zur Domerkennung erl\"autert. Hierf\"ur wird zuerst auf grundlegende Verfahren wie heuristische Optimierung eingegangen. Anschließend wird die Arbeitsweise des Werkzeugs im einzelnen beschrieben.
+
+\item  \textbf{Kapitel 3: Segmentierung von triangulierten Geometrien}\\
+Hier wird zun\"achst auf den Stand der Technik und Forschung von Algorithmen zur Segmentierung\footnote{Segmentierung meint im Kontext triangulierter Geometrien die Erzeugung von inhaltlich zusammenhängenden Bereichen des Netzes durch Zusammenfassung benachbarter Dreiecke.} von triangulierten Geometrien erl\"autert.
+Dann wird das in dieser Arbeit implementierte Verfahren im Einzelnen beschrieben und die Ergebnisse und Probleme anhand von Beispielen aufgezeigt.
+
+\item  \textbf{Kapitel 4: Halbautomatische Rippenerkennung}\\
+Dieser Abschnitt geht auf ein Werkzeug zur halbautomatischen Rippenerkennung ein, das auf dem Segmentierungsalgorithmus von Kapitel 3 basiert und im Rahmen der Masterarbeit entwickelt wurde. Hierzu werden Verfahren zur Bereinigung von erkannten Rippenfl\"achen und zur Erkennung der Rippentiefe vorgestellt.
+
+\item  \textbf{Kapitel 5: Vollautomatische Erkennung von Dom- und Rippenstrukturen}\\
+Dieses Kapitel beschreibt die Entwicklung von Algorithmen zur vollautomatischen Erkennung von Rippen- und Domstrukturen.
+Hierf\"ur wird zun\"achst auf den Stand der Forschung von graphenbasierten Feature\footnote{Mit Feature wird im CAD-Umfeld ein Bereich eines Bauteils mit einer bestimmten geometrischen Funktion oder Bedeutung gemeint.} -Erkennungsverfahren eingegangen. Danach wird das entwickelte Verfahren, das auf der in Kapitel 3 vorgestellten Segmentierung, detailliert beschrieben.
+
+\item  \textbf{Kapitel 6: Zusammenfassung und Ausblick}\\
+Dieses Kapitel beschreibt nochmals diese Arbeit in einer Zusammenfassung. Die gewonnenen Erkenntnisse werden in einer Schlussfolgerung erl\"autert. Anschließen{\ss}end werden noch Erweiterungen beschrieben, welche den Funktionsumfang und Einsatzm\"oglichkeiten dieser Software steigen w\"urden.
+
+\end{itemize}
 
