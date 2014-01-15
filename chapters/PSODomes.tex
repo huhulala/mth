@@ -17,49 +17,6 @@ Rotationswerte durch Analyse der Geometrie in der Umgebung einer Benutzereingabe
 
 Im Folgenden Abschnitt \ref{opti} wird kurz allgemein auf heuristische Optimierungsverfahren eingegangen. Danach wird in den Abschnitten  \ref{posTrafo} und \ref{goalFuction} beschrieben, wie die Parameter des Optimierungsproblems im einzelnen ermittelt werden. Abschnitt \ref{implPSO} geht auf die Implementierung und die Ergebnisse der Vorgehensweise ein.
 
-\section{Heuristische Optimierung}
-\label{opti}
-
-Ein Optimierungsproblem im mathematischen Sinn ist die Aufgabe, für eine Funktion eine Menge aus Eingabewerten zu finden, so das der Funktion einen minimalen (oder maximalen) Wert annimmt, wobei in der Regel eine Beschr\"ankung der Eingabewerte vorliegt. Die beste Vorgehensweise hierf\"ur h\"angt von der Art der Bewertungsfunktion ab. Ist diese beispielsweise linear, lassen sich solche Probleme mit Hilfe von Verfahren, die auf dem  sogenannten Simplex-Algorithmus basieren, effizient l\"osen.
-
-Handelt es sich nicht um lineare Zielfunktionen, sind analytische L\"osungsverfahren meistens sehr ineffizient und das systematische Durchsuchen des L\"oesungsraums ist aufgrund der Problemgr\"o{\ss}e nicht m\"oglich. F\"ur solche Probleme werden in der Informatik oft heuristische Optimierungsverfahren eingesetzt. Diese Verfahren generieren L\"osungen anhand einer definierten Vorgehensweise und verbessern diese suzessive, bis ein Abbruchkriterium, beispielsweise die Anzahl der Iterationen, erreicht ist. 
-
-Im Gegensatz zu analytische Verfahren beinhaltet heuristische Optimierung immer die Nutzung von Zufallswerten, beispielweise beim Simulated Annealing, das im folgenden kurz erl\"autert wird, die initialen Punkte im L\"osungsraum. Dies hat zu Folge, das heuristische Optimierungsverfahren nichtdeterministisch sind, also das bei komplexen Problemen mit mehreren lokalen Optima unterschiedliche L\"osungen gefunden werden. 
-
-Im Folgenden werden drei heuristische Optimierungsverfahren kurz erl\"autert: \textit{Simulated Annealing}, \textit{Evolution\"are Algorithmen} und \textit{Partikelschwarmoptimierung}. 
-
-\textbf{\textit{Simulated Annealing}} (SA, siehe \cite{Kirkpatrik}) imitiert das Abkühlverhalten von Metallen. Kühlen diese langsam ab, haben die Atome ausreichend Zeit, sich zu ordnen und eine stabile Kristallstruktur zu bilden. Der Algorithmus betrachtet einen Punkt im n-dimensionalen L\"osungsraum, der schrittweise in Richtung eines Optimums bewegt wird. Vor jeder Bewegung wird die Zielposition bewertet: Fällt die Bewertung besser aus, als die aktuelle Position, wird die Bewegung durchgeführt. Fällt sie schlechter aus, wird sie nur mit einer gewissen Wahrscheinlichkeit durchgef\"uhrt, die mit jedem Schritt sukzessive verringert wird.Diese Wahrscheinlichkeit entspricht der Temperatur des metallurgischen Abkühlungsprozesses und dient dazu, lokale Minima zu \"uberwinden.
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=10cm]{graphics/SimAnn.jpg}
-\caption{Simulated Annealing in einem zweidimensionalen L\"osungsraum}
-\label{fig6}
-\end{figure}
-
-\textbf{\textit{Evolution\"are Algorithmen} (EA)} sind eine Familie von Optimierungsverfahren, die sich das Prinzip der Selektion des Bestangepassten ("`\textit{Survival of the fittest}"') der nat\"urlichen Evolution zum Vorbild nehmen. Hierbei wird ein Punkt im L\"osungsraum als Individuum und eine Menge von Punkten als Population bezeichnet. Zu Beginn des Optimierungsverfahren wird der 
-L\"osungsraum mit einer randomisierten Population "`bev\"olkert"', die zun\"achst mit einer Zielfunktion (in diesem Zusammenhang oft Fitness-Funktion) bewertet werden. Die am schlechtesten bewerteten Individuen werden verworfen, w\"arend aus den Verbliebenen die n\"achste Population durch Anwendung von sogenannten "`Evolutionären Operatoren"' erzeugt wird, beispielsweise Mutation
-(leichtes Verändern eines Individuums) und Rekombination (Mischen der Gene zweier Individuen, oft auch als Crossover bezeichnet).
-Dieser Zyklus aus Selektion, Crossover und Mutation wird solange wiederholt, bis ein vorgegebenes Abbruchkriterium (z. B. Anzahl der Generationen) erreicht ist.
-Es werden die Hauptforschungsrichtungen Evolution\"are Programmierung (\cite{FogelAIsimEvo}), Genetische Algorithmen (\cite{GoldbergAISimEvo}) und Genetische Programmierung (\cite{KozaAIsimEvo}) unterschieden, die sich bez\"uglich der Datenstrukturen, Selektionsmethoden und der Operatoren unterscheiden.
-
-Als \textbf{\textit{Partikelschwarmoptimierung} (PSO)} wird ein Optimierungsverfahren bezeichnet, das nach dem Vorbild nat\"urlichen Schwarmverhaltens von beispielsweise Fischen oder V\"ogeln eine L\"osung f\"ur das Optimierungsproblem sucht. Die hier beschriebene Version der PSO wurde zuerst 1995 in einer Forschungsarbeit von J. Kennedy and R. Eberhart präsentiert \cite{kennedyPSOConfPaper}. \"Ahnlich den evolution\"aren Algorithmen wird bei der Partikelschwarmoptimierung initial eine zuf\"allige  Menge vom Punkten im L\"osungsraum, die hier als Partikel bezeichnet werden, erzeugt. Der Partikelschwarm wird nun schrittweise durch den L\"osungsraum bewegt, wobei benachbarte Partikel vor jedem Schritt die beste Position, die ein Partikel bisher gefunden hat, austauschen k\"onnen. Welche Partikel miteinander kommunizieren k\"onnen wird durch die sogenannte Nachbarschaftstopologie bestimmt. 
-Ein Partikel h\"alt somit zus\"atzlich zur Position $\vv{x}$ noch eine Bewegungsrichtung $\vv{v}$, die bisher beste gefundene Position als $\vv{p}_{best}$ und die beste Position seiner Umgebung als $\vv{n}_{best}$. Nach jedem Zeitschritt wird die Position und die Bewegungsrichtung (der Vektor $\vv{v}$ ist nicht normalisiert, er beinhaltet die Geschwindigkeit und Richtung) eines Partikels anhand folgender Formeln angepasst:
-
-\begin{equation}
-\vv{v}_{i,t+1} = \omega\cdot\vv{v}_{i,t}+c_{1}\cdot\vv{U}_{1}[0,1]\bigotimes(\vv{p}_{best,i,t})-\vv{x}_{i,t})
-+c_{2}\cdot\vv{U}_{2}[0,1]\bigotimes(\vv{g}_{best,i,t})-\vv{x}_{i,t})
-\end{equation}
-
-\begin{equation}
-\vv{x}_{i,t+1} = \vv{x}_{i,t} + \vv{v}_{i,t+1}
-\end{equation}
-
-Hierbei ist $t$ der Interationsz\"ahler, $\vv{U}_{k}[0,1]$ Zufallsvektoren und die Parameter $\omega$, $c_{1}$, $c_{1}$ bestimmen den Einflu{\ss}  der Position des vorigen Zeitschritts und der kognitiven und sozialen Komponenten.
-
-Im Rahmen dieser Arbeit wird heuristische Optimierung benutzt, um f\"ur einen bereits ausgerichteten Zylinder H\"ohe, Radius und Rotation zu ermitteln. Dieses Problem ist nicht seperabel, d.h. einzelne Dimensionen des L\"osungsraums k\"onnen nicht oder nur begrenzt unabh\"angig voneinander untersucht werden. Dar\"uber hinaus gibt es im L\"osungsraum des Problems mehrere lokale Optima; es ist multimodal.
-
-F\"ur die Implementierung des Optimierungsproblems wird Partikelschwarmoptimierung eingesetzt. Hierf\"ur wird ein Framework der Firma Teraport benutzt, das es erm\"oglicht, verschieden Optimierungsverfahren zu nutzen und Zielfunktionen zu implementieren.
 
 \section{Ermittlung der Position und Ausrichtung einer Domstruktur}
 \label{posTrafo}
