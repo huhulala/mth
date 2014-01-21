@@ -1,11 +1,8 @@
 \chapter{Kostenabsch\"atzung f\"ur spritzgussgefertigte Bauteile}
 \label{cha:costs}
 	
-\dictum[Rainer Megerle (*1949), Chef Mergele AG, Nürnberg]{Es stimmt nicht, daß die Kosten die Preise bestimmen. Die im Markt erzielbaren Preise definieren die Kosten, die man sich leisten kann.}		
+\dictum[David Hilbert]{Im großen Garten der Geometrie kann sich jeder nach seinem Geschmack einen Strauß pflücken.}	
 % -------------------------------------------------------------------------------------------------	
-% -------------------------------------------------------------------------------------------------
-% -------------------------------------------------------------------------------------------------
-% -------------------------------------------------------------------------------------------------
 
 \vspace{1cm}
 Das Spritzgie{\ss}en (oft umgangssprachlich auch als Spritzguss oder Spritzgussverfahren bezeichnet) ist ein sogenanntes Urformverfahren. Urformen ist ein Oberbegriff f\"ur Fertigungsverfahren, bei denen aus einem formlosen Stoff ein geometrischer bestimmter fester K\"orper hergestellt und der Stoffzusammenhang erzeugt wird. Es werden unter anderem Ausgangstoffe in fl\"ussigem, plastischem oder pulverförmigen Zustand genutzt. Spritzgie{\ss}en wird haupts\"achlich in der Kunststoffverarbeitung, aber auch beim Pulverspritzgie{\ss}en in der Metallverarbeitung eingesetzt.
@@ -38,8 +35,8 @@ Abbildung \ref{im:domes1} zeigt zwei typische, h\"aufig auftretende Domkonstrukt
 
 \begin{figure}[ht]
     \centering 
-    \subfigure[einfacher Dom]{\includegraphics[width=0.4\textwidth]{graphics/dom1.png}} 
-    \subfigure[Dom mit St\"utzrippen]{\includegraphics[width=0.4\textwidth]{graphics/dom2.png}} 
+    \subfigure[einfacher Dom]{\includegraphics[width=0.3\textwidth]{graphics/simpleDom2.png}} 
+    \subfigure[Dom mit St\"utzrippen]{\includegraphics[width=0.3\textwidth]{graphics/ribDom.png}} 
 \caption{Einfache Domkonstruktionen.} 
 \label{im:domes1}
 \end{figure} 
@@ -47,10 +44,12 @@ Abbildung \ref{im:domes1} zeigt zwei typische, h\"aufig auftretende Domkonstrukt
 
 \begin{figure}[ht]
     \centering 
-    \subfigure[]{\includegraphics[width=0.23\textwidth]{graphics/dom1.png}} 
-    \subfigure[]{\includegraphics[width=0.23\textwidth]{graphics/dom2.png}} 
-    \subfigure[]{\includegraphics[width=0.23\textwidth]{graphics/dom3.png}} 
-    \subfigure[]{\includegraphics[width=0.23\textwidth]{graphics/dom4.png}} 
+    \subfigure[]{\includegraphics[width=0.23\textwidth]{graphics/domSchraegerMantel.png}} 
+    \subfigure[]{\includegraphics[width=0.23\textwidth]{graphics/domSchraegerBoden.png}} 
+    \subfigure[]{\includegraphics[width=0.23\textwidth]{graphics/complexDom.png}} 
+    \subfigure[]{\includegraphics[width=0.23\textwidth]{graphics/domPlane.png}} 
+		\subfigure[]{\includegraphics[width=0.23\textwidth]{graphics/domPhaseUnten.png}} 
+		\subfigure[]{\includegraphics[width=0.23\textwidth]{graphics/simpleDom.png}} 
 \caption{Verschiedene Domkonstruktionen.} 
 \label{im:domes2}
 \end{figure} 
@@ -58,18 +57,34 @@ Abbildung \ref{im:domes1} zeigt zwei typische, h\"aufig auftretende Domkonstrukt
 Hier zeigt \textit{(a)} oben links einen einfachen zylindrischen Dom und \textit{(b)} einen zylindrischen Dom mit stabilisierenden St\"utzrippen. In \textit{(c)} und \textit{(d)} werden komplexere Domstrukturen, die aus mehreren geometrischen Grundk\"orpern zusammengesetzt sind, dargestellt. In den Abbildungen \textit{(e)}, \textit{(f)}, \textit{(g)} und \textit{(h)} werden einfache und komplexe Dome in unterschiedlichen geometrischen Kontexten gezeigt: In \textit{(e)} ist ein einfacher zylindrischer Dom auf einer schr\"agen Bodenplatte konstruiert, \textit{(f)} zeigt ein Dom, dessen planare Oberseite direkt in ein planares Element des Bauteils \"ubergeht, die planare Oberseite des Doms in Abbildung \textit{(g)} ist bez\"uglich der Ausrichtung des Doms schr\"ag geneigt. Abbildung \textit{(h)} zeigt einen Dom, der Teilweise mit der Umgebung verbunden ist.  
  
 \section{Rippen}
-\label{rips}
+\label{sec:rips}
  
 Verst\"arkungsrippen sind ein wirksames Hilfsmittel, um die Steifigkeit und Festigkeit von Spritzgu{\ss}teilen zu erhöhen. Der richtige Einsatz von Rippen kann Material und Gewicht einsparen, die Spritzzyklen verkürzen und dicke Querschnittbereiche vermeiden helfen, die beim Spritzgie{\ss}en zu Problemen führen könnten. Wenn Einfallstellen auf der einer Rippe gegen\"uberliegenden Seite nicht akzeptabel sind, k\"onnen sie durch strukturierte Oberflächen oder andere geeignete Unterbrechungen im Bereich der Einfallstelle kaschiert werden.  
 
+\begin{figure}[H]
+\centerline{
+	\includegraphics[width=0.8\columnwidth]{graphics/domTeil1.png}}
+\caption{Bauteil mit Rippen.}
+\label{im:goCart}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering 
+    \subfigure[einfacher Dom]{\includegraphics[width=0.24\textwidth]{graphics/ribOffenerBoden.png}} 
+		\subfigure[einfacher Dom]{\includegraphics[width=0.24\textwidth]{graphics/angephasteRippe.png}} 
+		\subfigure[einfacher Dom]{\includegraphics[width=0.24\textwidth]{graphics/komplexeRippe.png}} 
+\caption{H\"andisches Ausmessen einer Rippenstruktur} 
+\label{im:domes}
+\end{figure} 
+
+
 \section{Das Projekt \textit{GoCart}}
-\label{goCart}
+\label{sec:goCart}
 
 \begin{figure}[H]
 \centerline{
-	\includegraphics[width=0.95\columnwidth]{graphics/goCart.png}
-}
-\caption{Oberfl\"ache \textit{GoCart}.}
+	\includegraphics[width=0.95\columnwidth]{graphics/goCart.png}}
+\caption{Oberfl\"ache \textit{GoCart}}
 \label{im:goCart}
 \end{figure}
 
@@ -80,8 +95,6 @@ Die Werkzeuge der Teraport GmbH beinhalten auch die Visualisierungsanwendung \te
 \textit{GoCart} besitzt keine Funktion zur Kalkulation der Kosten eines spritzgu{\ss}gefertigten Bauteils, sondern erfasst ausschlie{\ss}lich hierf\"ur relevante Eigenschaften. Die eigentliche Kalkulation der Bauteilkosten werden mit einer weiteren Anwendung, der \textit{Schmale-Werkzeug kostenkalkulation} der Schmale Werkzeug- und Formtechnik GmbH, durchgef\"uhrt. Mit diesem Programm k\"onnen die relevanten Bauteilinformationen entweder mittels einer grafischen Benutzeroberfl\"ache vom Benutzer h\"andisch eingegeben oder über eine XML-Schnittstelle importiert werden. \textit{GoCart} erzeugt so eine von der \textit{Schmale-Werkzeugkostenkalkulation} lesbare XML-Datei.
 
 Die Anwendung besitzt Funktionalität zum Laden und Visualisieren von triangulierten CAD-Geometrien in üblichen Formaten wie Beispielsweise VRML oder STL, kann aber auch Geometrien, die aus properit\"aren CAD-Systemen wie Catia oder ProE exportiert wurden, lesen. Dar\"uber hinaus wurde Funktionalit\"at zum einfachen Erfassen der von der \textit{Schmale-Werkzeugkostenkalkulation} zur Kostenabsch\"atzung erforderlichen Informationen implementiert. Hiervon sind f\"ur diese Masterarbeit vor allem die Werkzeuge zur Erfassung von Dom- und Rippenstukturen interessant, die in den beiden folgenden Unterkapiteln n\"aher beschrieben werden.
-
-
 
 
 \subsection{H\"andisches Ausmessen von Domstrukturen}
@@ -126,6 +139,6 @@ Der Benutzer kann dann mit Hilfe eines Transformationsmanipulators die Höhe und
 		\subfigure[einfacher Dom]{\includegraphics[width=0.24\textwidth]{graphics/rippen2.png}} 
 		\subfigure[einfacher Dom]{\includegraphics[width=0.24\textwidth]{graphics/rippen3.png}} 
 		\subfigure[einfacher Dom]{\includegraphics[width=0.24\textwidth]{graphics/rippen4.png}} 
-\caption{H\"andisches Ausmessen einer Rippenstruktur.} 
+\caption{H\"andisches Ausmessen einer Rippenstruktur} 
 \label{im:domes}
 \end{figure} 

@@ -1,62 +1,58 @@
 
 \chapter{Einleitung}
 \label{cha:Einleitung}
+	
 \dictum[Rainer Megerle (*1949), Chef Mergele AG, Nürnberg]{Es stimmt nicht, daß die Kosten die Preise bestimmen. Die im Markt erzielbaren Preise definieren die Kosten, die man sich leisten kann.}		
 % -------------------------------------------------------------------------------------------------
 
 \section{Motivation}
 
-Das grundlegende Bestreben jedes Unternehmens ist es, seine Existenz am Markt zu sichern. Eine konjunkturell angespannte Wirtschaftslage, zunehmende Globalisierung der M\"arkte, h\"oherer Konkurrenzdruck und kontinuierlich steigende Anforderungen nach qualitativ hochwertigen Produkten stellen für die Unternehmen der Automobilindustrie wachsende Herausforderungen dar. 
+Das elementare Bestreben jedes Unternehmens ist es, seine Existenz am Markt zu gew\"ahrleisten. Hierbei stellen die angespannte Konjunktur und eine wachsende  Globalisierung der M\"arkte bei gleichzeitig kontinuierlich steigenden Anforderungen nach hochwertigen Produkten für die Unternehmen der Automobilindustrie schwierige Herausforderungen dar \cite{Piontek98}. 
 
-Unsichere Absatzprognosen, ein erschwerter Zugang zu Kapital und ein stark erh\"ohter Preis- und Wettbewerbsdruck sind Probleme,
-mit denen sich ein Automobilhersteller 2013 konfrontiert sieht. Dar\"uber hinaus erh\"ohen eine Vielzahl von international pr\"asenter Unternehmen den Konkurrenzdruck, den Bed\"urfnissen des Kunden gerecht zu werden.
+Dar\"uber hinaus sehen sich Automobilhersteller 2013 mit einer ver\"anderten Marktsituation konfrontiert. In der Mitte des 20. Jahrhunderts konnte ein Autohersteller aufgrund einer das Angebot weit \"ubersteigenden Nachfrage seine gesamte Produktion absetzen. Es handelte sich um einen sogenannten Angebotsmarkt. Diese Situation hat sich grundlegend ver\"andert. Eine Vielzahl von international operierenden Herstellern produzieren insgesamt mehr Fahrzeuge, als vom Konsumenten nachgefragt werden. Dies erlaubt es dem  Kunden, ein individuell auf seine Bed\"urfnisse angepasstes, qualitativ hochwertiges Produkt nachzufragen \cite{Gehr07}. Der Angebotsmarkt der Nachkriegswirtschaft der 1960'er Jahre hat sich zu einem Nachfragemarkt gewandelt.
 
-Um diese Situation zu verbessern, geben die Automobilhersteller den Kostendruck an ihre Zulieferer weiter. So wirkt sich der Qualit\"ats - und Kostendruck und damit die Notwendigkeit, ein Bauteil schon w\"ahrend der Konstruktion fertigungsgerecht und somit kosteneffizient zu gestalten, direkt auf die Automobilzulieferer aus. Hieraus entsteht bei diesen Firmen die Nachfrage nach softwaretechnischen Werkzeugen, mit denen sich die Fertigungskosten eines Bauteils einfacher absch\"atzen lassen. 
+Zus\"atzlich zu diesen Faktoren sind unsichere Absatzprognosen, ein erschwerter Zugang zu Kapital und ein stark erh\"ohter Preis- und Wettbewerbsdruck Probleme, mit denen sich ein Automobilhersteller 2013 konfrontiert sieht. Eine Vielzahl von international pr\"asenter Unternehmen erh\"ohen au{\ss}erdem den Konkurrenzdruck, den Bed\"urfnissen des Kunden gerecht zu werden.
+
+Diese Anforderungen stellen die Automobilhersteller vor eine gro{\ss}e Herausforderung: Immer k\"urzer werdende Produktlebens- und Entwicklungszyklen m\"ussen bei steigender Diversifikation und Komplexit\"at der Produkte realisiert werden, w\"ahrend die gleichzeitig die Kosten gesengt oder zumindest konstant gehalten werden sollen \cite{proc-disc-2009}.
+
+Um diese Situation zu verbessern, versuchen die Automobilbauer die Kosten an ihre Zulieferer weiterzugeben. So wirkt sich der Qualit\"ats - und Kostendruck und damit die Notwendigkeit, ein Bauteil schon w\"ahrend der Konstruktion fertigungsgerecht und somit kosteneffizient zu gestalten, direkt auf die Automobilzulieferer aus. Hieraus entsteht bei diesen Firmen die Nachfrage nach Werkzeugen, mit denen sich die Fertigungskosten eines Bauteils einfacher absch\"atzen lassen. 
+
+In der Automobilindustrie werden Bauteile mit Hilfe von rechnergest\"utzter Konstruktion (eng. Computer Aided Design-Systemen, CAD) erstellt. Computer Aided Design begann Mitte der sechziger mit dem zweidimensionalen Entwurf einzelner Bauteile auf Gro{\ss}rechnern und hat sich heute zu einer Technologie mit vielf\"altigen Anwendungen in den unterschiedlichsten Bereichen entwickelt. Heutzutage wird die Konstruktion s\"amtlicher Bauteile eines Fahrzeugs und ihr Zusammenbau zu Baugruppen mit Hilfe 
+von Computer Aided Design-Systemen durchgef\"uhrt. Bei einer CAD-Konstruktion im Maschinenbau erstellt der Konstrukteur ein sogenanntes Volumenmodell des Bauteils. Aus diesem Volumenmodell\footnote{Ein Volumenmodell dient der Modellierung von Objekten in einem dreidimensionalen Raum mit einer realit\"atsnahen Anpassung, eine m\"oglichst genaue Approximation der Realit\"at.} k\"onnen zwei - oder  dreidimensionale Zeichnungen oder animierte Visualisierungen der Objekte in jeder Phase des Entwicklungsprozesses erzeugt werden. Dies hat unter anderem den Vorteil, das wichtige Untersuchungen bereits in einem fr\"uhen Stadium der Produktentwicklung durchgef\"uhrt werden k\"onnen. Das k\"onnen beispielsweise dynamische Simulationen des Fahrzeugverhaltens oder Kostenanalysen f\"ur Bauteile sein \cite{koenig}.
+
+Kostenanalyse von CAD-Bauteilen bedeutet, eine Reihe von haupts\"achlich geometrischen Eigenschaften, die je nach Fertigungsverfahren variieren, zu erfassen. Unter Fertigungsverfahren oder Fertigungsart meint man eine Reihe von hintereinander ausgef\"uhrten Prozessen, mit denen ein Produkt aus anderen G\"utern produziert wird. Beispielsweise wird beim Spritzgie{\ss}en  erhitztes Metall in einen Hohlraum (Formwerkzeug) gespritzt, in welchem er erst verdichtet wird und dann erkaltet. Bei mit Spritzguss gefertigten Bauteilen sind geometrische Eigenschaften, die die Fertigungskosten ma{\ss}geblich erh\"ohen (sogenannte Kostentreiber) zum Beispiel die minimale und maximale Dicke des K\"orpers oder die Anzahl der sogenannten Hinterschnitte. Die Erfassung dieser Eigenschaften sind f\"ur den Benutzer teilweise sehr aufwendig, so das eine softwaretechnische Unterst\"utzung w\"unschenswert ist. Im Rahmen dieser Arbeit sollen Werkzeuge entwickelt werden, wie bestimmte kostentreibende geometrische Strukturen, sogenannte Rippen und Dome (siehe Abschnitt \ref{sec:dome} und Abschnitt \ref{sec:rips}), innerhalb von spritzgego{\ss}enen Bauteilen einfacher ermittelt werden k\"onnen. 
 
 \section{Problemstellung}
-
-In der Automobilindustrie wird die Konstruktion s\"amtlicher Bauteile eines Fahrzeugs und ihr Zusammenbau zu Baugruppen mit Hilfe von Computer Aided Design-Systemen (CAD) realisiert. Dies hat unter anderem den Vorteil, das wichtige Untersuchungen bereits in einem fr\"uhen Stadium der Produktentwicklung durchgef\"uhrt werden k\"onnen. Das k\"onnen beispielsweise dynamische Simulationen des Fahrzeugverhaltens oder eben Kostenanalysen f\"ur Bauteile sein.
-
-Zur Kostenanalyse von CAD-Bauteilen ist es notwendig, eine Reihe von Eigenschaften, die mit dem Fertigungsverfahren variieren, zu erfassen. Mit Fertigungsverfahren oder Fertigungsart sind eine Reihe von hintereinander ausgef\"uhrten Prozessen gemeint, mit denen ein Produkt aus anderen G\"utern produziert wird. Beispielsweise wird beim Spritzgie{\ss}en erhitzter Kunststoff in einen Hohlraum (Formwerkzeug) gespritzt, in welchem er erst verdichtet wird und dann erkaltet. Bei mit Spritzguss gefertigten Bauteilen sind Eigenschaften, die die Fertigungskostem ma{\ss}geblich erh\"ohen (sogenannte Kostentreiber) zum Beispiel die minimale und maximale Dicke des K\"orpers oder die Anzahl der sogenannten Hinterschnitte. Die Erfassung dieser Eigenschaften sind f\"ur den Benutzer teilweise sehr aufwendig, so das eine softwaretechnische Unterst\"utzung w\"unschenswert ist. Im Rahmen dieser Arbeit sollen Werkzeuge entwickelt werden, wie bestimmte kostentreibende geometrische Strukturen, sogenannte Rippen und Dome, innerhalb von spritzgego{\ss}enen Bauteilen einfacher ermittelt werden k\"onnen. Im folgenden Abschnitt \ref{injection} wird kurz auf die das Spritzgu{\ss} Fertigungsverfahren eingegangenen und die Anwendung \textit{GoCart} vorgestellt, in die die im Rahmen dieser Arbeit entwickelten Werkzeuge integriert wurden.
- 
-\newpage
- 
-
-
-
-%Rippenmessen
-
-\section{Zielsetzung der Arbeit}
 \label{problem}
 
-Ziel dieser Masterarbeit ist die Entwicklung von interaktiven Werkzeugen und automatischen Methoden zur Erfassung von Dom- und Rippenstrukturen in triangulierten Bauteilen.
+Ziel dieser Masterarbeit ist die Entwicklung von halb- und vollautomatische Methoden zur Erfassung von Dom- und Rippenstrukturen in triangulierten\footnote{Als triangulierte Geometrien werden dreidimensionale K\"orper, die aus einzelnen Dreiecken zusammengesetzt sind, bezeichnet.} Bauteilen. 
 
-Die entwickelten Verfahren wurden, zum Teil in ausgetesteter und produktreifer Form, in die Anwendung \textit{GoCart} integriert. Daher kann die Vorgehensweise und Nutzen der jeweiligen Methode anhand praktischer Beispiele erl\"autert werden. Es soll gezeigt werden, das diese Verfahren die im Abschnitt \ref{injection} vorgestellte h\"andische Vorgehensweise ma{\ss}geblich beschleunigen. Im Anschluss werden die Vor- und Nachteile der entwickelten Methoden gegenüber der bisherigen Vorgehensweise diskutiert.
-
-In den folgenden beiden Abschnitten werden zum einen grundlegende Methoden und Techniken aus der Computergrafik vorgestellt, die in der Arbeit h\"aufig verwendet werden und die zum Verst\"andniss des weiteren Texts von Bedeutung sind, und zum anderen wird der Aufbau der folgenden Kapitel vorgestellt.
-
-\newpage
+Die Verfahren wurden im Rahmen des Kundenprojektes \textit{GoCart} f\"ur die VW AG entwickelt. Es wird im Abschnitt \ref{sec:goCart} ausf\"uhrlich vorgestellt. Die Werkzeuge sind teilweise ausgetestet und produktreif, teilweise prototypisch. Daher kann die Vorgehensweise und der Nutzen der jeweiligen Methode anhand praktischer Beispiele erl\"autert werden. Es soll gezeigt werden, das diese Verfahren die im Abschnitt \ref{sec:goCart} vorgestellten h\"andische Vorgehensweise ma{\ss}geblich beschleunigen.
 
 \section{Aufbau der Arbeit}
 Nach dieser Einleitung sind die restlichen Kapitel wie folgt aufgebaut:
 
 \begin{itemize}
-\item  \textbf{Kapitel 2: Stand der Forschung und Technik}\\
+\item  \textbf{Kapitel 2: Kostenabsch\"atzung f\"ur spritzgussgefertigte Bauteile}\\
+In diesem Kapitel wird erl\"autert, welche Eigenschaften von CAD-Bauteilen bei der Kostenabsch\"tzung f\"ur spritzgussgefertigte Bauteile erfasst werden. Anschlie{\ss}end wird n\"aher auf die Anwendung \textit{GoCart} eingegangen, in die die in dieser  Masterarbeit erstellten Werkzeuge integriert wurden.
+
+
+\item  \textbf{Kapitel 3: Stand der Forschung und Technik}\\
 In diesem Kapitel wird auf den Stand der Forschung und Technik der in dieser Arbeit verwendeten Technologien und Verfahren eingegangen. 
 
-\item  \textbf{Kapitel 3: Halbautomatische Erkennung von Domstrukturen}\\
+\item  \textbf{Kapitel 4: Halbautomatische Erkennung von Domstrukturen}\\
 Hier wird die Funktionsweise eines halbautomatischen Werkzeugs zur Domerkennung erl\"autert. Das Werkzeug basiert auf dem Verfahren der heuristischen Optimierung, auf das in Kapitel 2 grundlegend erl\"autert wird. 
 
-\item  \textbf{Kapitel 4: Segmentierung von triangulierten Geometrien}\\
+\item  \textbf{Kapitel 5: Segmentierung von triangulierten Geometrien}\\
 Dieses Kapitel beschreibt das in dieser Arbeit implementierte Verfahren zur Segmentierung\footnote{Segmentierung meint im Kontext triangulierter Geometrien die Erzeugung von inhaltlich zusammenhängenden Bereichen des Netzes durch Zusammenfassung benachbarter Dreiecke.} von triangulierten Geometrien im Einzelnen und zeigt die Ergebnisse und Probleme anhand von Beispielen auf.
 
-\item  \textbf{Kapitel 5: Halbautomatische Rippenerkennung}\\
+\item  \textbf{Kapitel 6: Halbautomatische Rippenerkennung}\\
 Dieser Abschnitt geht auf ein Werkzeug zur halbautomatischen Rippenerkennung ein, das auf dem Segmentierungsalgorithmus von Kapitel 3 basiert und im Rahmen der Masterarbeit entwickelt wurde. Hierzu werden Verfahren zur Bereinigung von erkannten Rippenfl\"achen und zur Erkennung der Rippentiefe vorgestellt.
 
-\item  \textbf{Kapitel 6: Vollautomatische Erkennung von Dom- und Rippenstrukturen}\\
+\item  \textbf{Kapitel 7: Vollautomatische Erkennung von Dom- und Rippenstrukturen}\\
 Dieses Kapitel beschreibt die Entwicklung eines Verfahrens zur vollautomatischen Erkennung von Rippen- und Domstrukturen, das auf graphenbasierten Feature\footnote{Mit Feature wird im CAD-Umfeld ein Bereich eines Bauteils mit einer bestimmten geometrischen Funktion oder Bedeutung gemeint.} -Erkennungsverfahren basiert, eingegangen. 
 
-\item  \textbf{Kapitel 7: Zusammenfassung und Ausblick}\\
+\item  \textbf{Kapitel 8: Zusammenfassung und Ausblick}\\
 Dieses Kapitel beschreibt nochmals diese Arbeit in einer Zusammenfassung. Die gewonnenen Erkenntnisse werden in einer Schlussfolgerung erl\"autert. Anschließen{\ss}end werden noch Erweiterungen beschrieben, welche den Funktionsumfang und Einsatzm\"oglichkeiten dieser Software steigen w\"urden.
 
 \end{itemize}

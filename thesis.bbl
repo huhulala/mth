@@ -1,5 +1,10 @@
 \begin{thebibliography}{10}
 
+\bibitem{proc-disc-2009}
+{\em Proc.\ 23rd International Symposium on Distributed Computing (DISC, Elche,
+  Spain, September 2009)}, volume 5805 of {\em Lecture Notes in Computer
+  Science}, Berlin, Germany, 2009. Springer.
+
 \bibitem{Ericson05}
 Christer Ericson.
 \newblock {\em {Real-Time Collision Detection}}.
@@ -9,6 +14,11 @@ Christer Ericson.
 A.Ji; Walsh~M.J Fogel, L.J.;~Owens.
 \newblock {\em Artificial intelligence through simulated evolution}.
 \newblock Wiley and Sons, New York, USA, 1st edition, 1966.
+
+\bibitem{Gehr07}
+Bernd~Hellingrath Frank~Gehr.
+\newblock {\em {Logistik in der Automobilindustrie}}.
+\newblock Springer, Berlin, 2007.
 
 \bibitem{GoldbergAISimEvo}
 D.E Goldberg.
@@ -46,6 +56,16 @@ Steven~M. LaValle.
 UNC Research~Group on~Modeling Physically-Based Simulation~andApplications.
 \newblock Pqp - a proximity query package.
 \newblock \url{http://www.cs.unc.edu/~geom/SSV/}, 05/2009.
+
+\bibitem{Piontek98}
+Jochem Piontek.
+\newblock {\em {Global Sourcing}}.
+\newblock Oldenbourg Wissenschaftsverlag, 1998.
+
+\bibitem{koenig}
+W.~Kaiser W.~Konig.
+\newblock {\em {Geschichte des Ingenieurs. Ein Beruf in sechs Jahrtausenden.}}
+\newblock Munchen, Hanser Fachbuchverlag., 2006.
 
 \bibitem{zachmannThesis}
 Gabriel Zachmann.

@@ -214,14 +214,62 @@ Im Rahmen dieser Arbeit wird heuristische Optimierung benutzt, um f\"ur einen be
 
 F\"ur die Implementierung des Optimierungsproblems wird Partikelschwarmoptimierung eingesetzt. Hierf\"ur wird ein Framework der Firma Teraport benutzt, das es erm\"oglicht, verschieden Optimierungsverfahren zu nutzen und Zielfunktionen zu implementieren.
 
+\newpage
+
 \section{Segmentierung von triangulierten Geometrien}
-\subsection{Notation und Klassifizierung von Segmentierungstechniken}
+
+Unter Segmentierung versteht man die Unterteilung eines Datensatzes in Partitionen anhand bestimmter Kriterien. Eine Partition (auch Zerlegung oder Klasseneinteilung) im mathematischen Sinne ist eine Zerlegung einer Menge $M$ in nichtleere Partitionen $P$, so das jedes Element aus $M$ in genau einer Partition $P$ enthalten ist. Die Segmentierung von triangulierten Geometrien, wie sie im Abschnitt \ref{triGeo} beschrieben werden, ist somit die Partitionierung von Dreiecksnetzen in Subnetze, so das jedes Dreieck Teil genau eines Subnetzes ist.
+
+Segmentierungstechniken sind f\"ur viele Bereiche der Computertechnik relevant. Beispielsweise in der zweidimensionalen Bildverarbeitung und beim maschinellen Sehen ist die Segmentierung der Daten oft der erste Schritt f\"ur eine anschließende Nutzung in Anwendungen wie der automatischen Schrift- oder Gesichtserkennung. Die Segmentierung von triangulierten Netzen ist eine Schl\"usseltechnologie f\"ur eine Reihe von Aufgaben und Anwendungen bei der Verarbeitung von polygonalen geometrischen Daten.
+Segmentierungsverfahren werden unter anderem f\"ur Aufgaben wie das Komprimieren von Geometriedaten, Texturemapping oder zur Animation ben\"otigt. In \cite{Ericson05} basiert ein System zur Feautureerkennung und Klassifizierung von Figurmodellen auf einem Segmentierungsverfahren.
+
+Es gibt kein eindeutiges Qualit\"atskriterium f\"ur die Segmentierung eines polygonalen Netzes, da sich die Kriterien f\"ur die Unterteilung des Netzes in Partitionen je nach Objekttyp unterscheiden. \cite{Ericson05} formalisiert die Segmentierung eines Netzes als Optimierungsproblem, in dem verschiedene Kriterien f\"ur unterschiedliche Anwendungen verwendet werden, um die Energie der Optimierungsfunktion zu definieren. M\"ogliche Kriterien zur Netzpartionierung sind beispielsweise differentiale Eigenschaften wie die Kurvigkeit (eng. Curvature) und die Ausrichtung der Netznormalen oder die geodätische Distanz. Auf einige f\"ur die Segmentierung von mechanischen Bauteilen relevanter Kriterien wird im Abschnitt \ref{segCrit} eingegangen.
+
+\subsection{Formalisierung des Problems}
+
+Ein dreidimensionales \textbf{\textit{Dreiecksnetz}} $M$ l\"asst sich formal als Tupel aus den drei Mengen $V$, $E$ und $T$ auffassen, also $M=\{V,E,T\}$. Hierbei sind $V=\{p_{i}|p_{i} \in \mathbb{R},1<i<m\}$ die Punkte (eng. \textit{vertices}), $E=\{e_{ij}=(p_{i},p_{j})|p_{i},p_{j} \in V, i \neq j\}$ die Kanten (eng. \textit{edges})  und $T=\{t_{ijk} \in T|p_{i},p_{j},p_{k} \in V, i \neq j, i \neq k, j \neq k \}$ die Dreiecke (eng. \textit{triangles}). 
+
+Ein Dreiecksnetz l\"asst sich auch als sogenannter \textbf{\textit{Netz-Nachbarschaftsgraph}} $G$ auffassen. Dieser wird erzeugt, indem man jedes Dreick als Knoten auffasst und zwei Knoten genau dann mit einer Kante verbindet, wenn die beiden korrespondierenden Dreiecke eine gemeinsame Ecke besitzen (siehe Abbildung \ref{netGraph}).
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=5cm]{graphics/faceGraph.png}
+\caption{Teil des Netz-Nachbarschaftsgraph eines Dreiecksnetzes}
+\label{netGraph}
+\end{figure}
+
+Ein \textbf{\textit{Subnetz}} $M' \subset M$ kann ist ein Tupel aus den Mengen $V'$, $E'$ und $T'$ ($M'=\{V',E',T'\}$). Hier gilt  $V' \subset V$, die Kanten $E=\{e_{ij}=(p_{i},p_{j})|p_{i},p_{j} \in V'\}$ sind alle Kanten zwischen Punkten aus $V'$ und die Dreiecke $T'=\{t_{ijk} \in T'|p_{i},p_{j},p_{k} \in V', i \neq j, i \neq k, j \neq k \}$ alle Dreiecke zwischen Punkten aus $V'$. Auf dieser Basis l\"asst sich die Segmentierung eines Netzes folgenderma{\ss}en definieren:
+
+\newtheorem{meintheorem}[anderestheorem]{Satz}[\textbf{Segmentierung $\sum$} ]
+\begin{meintheorem}
+Sei $M$ ein dreidimensonales Dreiecksnetz, das aus den Elementen $V$, $E$ und $T$ besteht. Die Segmentierung $\sum$ vom $M$  ist die Menge der $k$ disjunkten Subnetze  $\sum=\{M_{0},..,M_{k-1}\}$. Es gilt also $M=\bigcup\limits_{i \in 0<i<k} M_{i}$.
+\end{meintheorem}
+
+Nach dieser Definition gibt es f\"ur ein Netz $M$ mit $k$ Punkten so viele Segmentierungen wie f\"ur eine Menge mit $k$ Punkten Partitionierungen existieren. Die Anzahl der m\"oglichen Partitionen einer k-elementigen Menge nennt man Bellsche Zahl $B_{k}$.
+Diese Zahl ist schon f\"ur kleine $k$ enorm gro{\ss} (beispielsweise ist $B_{5}=52$ und $B_{6}=203$). Es macht daher Sinn, ein Qualit\"atskriterium f\"ur Segmentierungen einzuf\"uhren, um gute und weniger gute Partitionierung zu differenzieren. Bei \cite{Ericson05} wird das \"uber eine Energiefunktion $E$ mit der Partitionierung von $M$ als Argument erreicht: Eine Segmentierung ist hier umso besser, je geringer der Wert der Optimierungsfunktion $E$ ist.
+
+\newtheorem{meintheorem}[anderestheorem]{Satz}[\textbf{Segmentierung $\sum$ als Optimierungsproblem}]
+\begin{meintheorem}
+Finde f\"ur das Netz $M=\{V,E,T\}$ eine Partitionierung $\sum$, so die Energiefunktion $E= 2^{|T|} \rightarrow \mathbb{R}$ minimiert wird.
+\end{meintheorem}
+
+Wie im Abschnitt \ref{opti} bereits erl\"autert wurde, ist der problematische Teil bei Optimierungsproblemen die Formulierung der Energiefunktion. Im Fall der Segmentierung von Dreiecknetzen ist die Wahl einer sinnvollen Energiemethode abh\"angig von den Eingabedaten und dem Anwendungsfall. 
+
+
+
+
 \subsection{Geometrische Eigenschaften und Unterteilungskriterien}
+\label{segCrit}
+
+\subsection{Klassifizierung von Segmentierungstechniken}
+
+
 \subsection{Hierachisches Clustering}
 
 \section{Automatische Featureerkennung}
-\subsection{Klassifizierung von Featureerkennungstechniken}
+\subsection{G"angige Techniken zur Erkennung von Features in CAD-Geometrien}
 \subsection{Subgraphisomorphismen}
+
 
 
 
